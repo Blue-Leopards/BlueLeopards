@@ -10,10 +10,14 @@ import {
   } from 'react-native';
 
 const InterestsPage = () => {
-
     return (
         <View style={{flex: 6}}>
-            
+            <FlatList
+                listKey="interests"
+                data={DATA}
+                renderItem={({item}) => {
+                    return (<Interest data={item}/>);
+                }}/>
         </View>
     );
 };
@@ -23,12 +27,17 @@ const Interest = (props) => {
     return (
         <View style={{borderWidth: 1}}>
             <Text>{name}</Text>
-            <Text>Contributors:</Text>
+            { contributors.length === 0
+                ? <></>
+                : <Text>Contributors:</Text>}
             <FlatList
                 listKey="contributors"
                 data={contributors}
                 renderItem={({item, index}) => <Text>- {item}</Text>}/>
-            <Text>Projects:</Text>
+            { projects.length === 0 
+                ? <></>
+                : <Text>Projects:</Text>
+            }
             <FlatList
                 listKey="projects"
                 data={projects}
