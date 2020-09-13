@@ -12,18 +12,14 @@ import {
 
 
 const ProfilesPage = () => {
-    const data = profiles[0];
-    //const {name, occupation, bio, pictureURL} = data;
     return (
-        <View style={{flex:6}}>
+        <View style={{flex: 6}}>
             <FlatList
                 listKey="profiles"
                 data={profiles}
                 renderItem={({item}) => {
                     return (<Profile data={item}/>);
-                }
-                }
-                    />
+                }}/>
         </View>
     );
 }
