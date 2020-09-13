@@ -15,7 +15,7 @@ const ProfilesPage = () => {
     const data = profiles[0];
     //const {name, occupation, bio, pictureURL} = data;
     return (
-        <View>
+        <View style={{flex:6}}>
             <FlatList
                 listKey="profiles"
                 data={profiles}
