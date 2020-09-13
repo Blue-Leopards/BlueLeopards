@@ -32,7 +32,7 @@ import ProfilesPage from './pages/ProfilesPage';
 
 const App: () => React$Node = () => {
   return (
-      <View style={{flex:1}}>
+      <View>
         {/* <HomePage/> */}
         <ProfilesPage/>
         <NavigationBar/>

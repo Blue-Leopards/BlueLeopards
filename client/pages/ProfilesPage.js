@@ -5,25 +5,60 @@ import {
     View,
     Text,
     StatusBar,
+    Image,
+    FlatList
   } from 'react-native';
 
 
 
 const ProfilesPage = () => {
-
+    const data = profiles[0];
+    //const {name, occupation, bio, pictureURL} = data;
     return (
-        <View style={{flex: 1}}>
-
+        <View>
+            <FlatList
+                listKey="profiles"
+                data={profiles}
+                renderItem={({item}) => {
+                    return (<Profile data={item}/>);
+                }
+                }
+                    />
         </View>
     );
 }
 
-const Profiles = [
+const Profile = (props) => {
+    const pic = props.pictureURL;
+    const {name, occupation, bio, pictureURL, interests, projects} = props.data;
+    console.log(interests);
+    return (
+        <View style={{borderWidth: 1}}>
+            <Text>{name}</Text>
+            <Text>{occupation}</Text>
+            <Text>{bio}</Text>
+            <Image source={require('../public/images/default_profile.jpg')} style={{ width: 40, height: 40 }} />
+            <Text>Interests:</Text>
+            <FlatList
+                listKey="interests"
+                data={interests}
+                renderItem={({item, index}) => <Text>- {item}</Text>}/>
+            <Text>Projects:</Text>
+            <FlatList
+                listKey="projects"
+                data={projects}
+                renderItem={({item, index}) => <Text>- {item}</Text>}/>
+        </View>
+    );
+}
+
+const profiles = [
     {
+        id: '10',
         name: 'Philip Johnson',
         occupation:'Professor',
         bio:'I am a Professor and like to paddle outrigger canoes.',
-        pictureURL:'',
+        pictureURL:'../public/images/default_profile.jpg',
         interests: [
             'Software Engineering',
             'Climate Change'
@@ -34,10 +69,11 @@ const Profiles = [
         ]
     },
     {
+        id: '20',
         name:'Henri Casanova',
         occupation:'Professor',
         bio:'In my spare time, I like to scuba dive.',
-        pictureURL:'',
+        pictureURL:'https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
         interests: [
             'HPC',
             'Distributed Computing'
@@ -47,10 +83,11 @@ const Profiles = [
         ]
     },
     {
+        id: '30',
         name:'Carleton Moore',
         occupation:'Assistant Professor',
         bio:'Every summer, I enjoy visiting Portland, Oregon.',
-        pictureURL:'',
+        pictureURL:'https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
         interests: [
             'Software Engineering',
             'Renewable Energy'
@@ -60,10 +97,11 @@ const Profiles = [
         ]
     },
     {
+        id: '40',
         name:'Anthony Christe',
         occupation:'Ph.D. Student',
         bio:'I enjoy competitive bicycle racing',
-        pictureURL:'',
+        pictureURL:'https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
         interests: [
             'AI',
             'Distributed Computing'
@@ -73,10 +111,11 @@ const Profiles = [
         ]
     },
     {
+        id: '50',
         name:'Jason Leigh',
         occupation:'Professor',
         bio:'I escaped from Chicago and moved to Hawaii in 2014.',
-        pictureURL:'',
+        pictureURL:'https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
         interests: [
             'Visualization',
         ],
@@ -85,10 +124,11 @@ const Profiles = [
         ]
     },
     {
+        id: '60',
         name:'Serge Negrashov',
         occupation:'Ph.D. Student',
         bio:'Most weekends, you can find me on my 8 foot dinghy.',
-        pictureURL:'',
+        pictureURL:'https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
         interests: [
             'Scalable IP Networks',
         ],
