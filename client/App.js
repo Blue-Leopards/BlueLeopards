@@ -31,6 +31,9 @@ import NavigationBar from './pages/NavigationBar';
 import ProfilesPage from './pages/ProfilesPage';
 import ProjectsPage from './pages/ProjectsPage';
 import InterestsPage from './pages/InterestsPage';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
+import AccountPage from './pages/AccountPage';
 
 const App: () => React$Node = () => {
   return (
@@ -39,6 +42,7 @@ const App: () => React$Node = () => {
         {/* <ProfilesPage/> */}
         {/* <ProjectsPage/> */}
         <InterestsPage/>
+        
         <NavigationBar/>
       </View>
   );
