@@ -29,12 +29,14 @@ import {
 import HomePage from './pages/HomePage';
 import NavigationBar from './pages/NavigationBar';
 import ProfilesPage from './pages/ProfilesPage';
+import ProjectsPage from './pages/ProjectsPage';
 
 const App: () => React$Node = () => {
   return (
       <View style={{flex:1}}>
         {/* <HomePage/> */}
-        <ProfilesPage/>
+        {/* <ProfilesPage/> */}
+        <ProjectsPage/>
         <NavigationBar/>
       </View>
   );
