@@ -40,7 +40,8 @@ const App: () => React$Node = () => {
       <View style={{flex:1, backgroundColor: "#eae9ef"}}>
         {/* <HomePage/> */}
         {/* <ProfilesPage/> */}
-        <ProjectsPage/>
+        {/* <ProjectsPage/> */}
+        <InterestsPage />
         {/* <LoginPage/> */}
         {/* <NavigationBar/> */}
       </View>
