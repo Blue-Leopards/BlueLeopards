@@ -64,7 +64,6 @@ const Profile = (props) => {
         const word = names[i];
         initials += word[0];
     }
-    console.log(initials);
 
     const LeftContent = props => <Avatar.Text size={50} label={initials} />
 

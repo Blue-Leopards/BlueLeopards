@@ -1,10 +1,15 @@
 import React from 'react';
 import {
     View,
-    Text,
     Image,
     FlatList
   } from 'react-native';
+
+import {
+    Text,
+    Avatar, Button, Card, Title, Paragraph, Divider,
+    Subheading, Chip
+} from 'react-native-paper';
 
 const ProjectsPage = () => {
     return (
@@ -21,24 +26,55 @@ const ProjectsPage = () => {
 
 const Project = (props) => {
     const {name, description, interests, contributors} = props.data;
+
+    /* Take initials of project name */
+    const names = name.split(" ");
+    let initials = "";
+    for(let i = 0; i < names.length; i++) {
+        const word = names[i];
+        initials += word[0];
+    }
+
+    const LeftContent = props => <Avatar.Text size={50} label={initials} />
+
     return (
-        <View style={{borderWidth: 1}}>
-            <Image source={require('../public/images/default_project.png')} style={{ width: 40, height: 40 }} />
-            <Text>{name}</Text>
-            <Text>{description}</Text>
-            <Text>Tags:</Text>
-            <FlatList
-            listKey="interests"
-                data={interests}
-                renderItem={({item, index}) => <Text>- {item}</Text>}/>
-            <Text>Contributors:</Text>
-            <FlatList
-                listKey="contributors"
-                data={contributors}
-                renderItem={({item, index}) => <Text>- {item}</Text>}/>
-        </View>
+        <Card style={{ margin: 10 }}>
+            <Card.Title title={name} left={LeftContent} />
+            <Card.Content style={{ marginBottom: 5 }}>
+                <Paragraph>{description}</Paragraph>
+            </Card.Content>
+            <View>
+                <Card.Content style={{ flex: 1 }}>
+                    <FlatList
+                        style={{ flexDirection: 'row' }}
+                        listKey="interests"
+                        data={interests}
+                        renderItem={({ item, index }) => <Chip style={{ marginRight: 10, backgroundColor: '#51b1a8' }}><Text style={{ color: 'white' }}>{item}</Text></Chip>} />
+                </Card.Content>
+                <Card.Content style={{ flex: 1 }}>
+                    <Subheading>Contributors</Subheading>
+                    <FlatList
+                        listKey="contributors"
+                        data={contributors}
+                        renderItem={({ item, index }) => <Paragraph>{item}</Paragraph>} />
+                </Card.Content>
+            </View>
+            <Divider style={{ marginTop: 10 }} />
+        </Card>
     );
-};
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 const DATA = [
     {

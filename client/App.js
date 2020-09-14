@@ -39,8 +39,8 @@ const App: () => React$Node = () => {
   return (
       <View style={{flex:1, backgroundColor: "#eae9ef"}}>
         {/* <HomePage/> */}
-        <ProfilesPage/>
-        {/* <ProjectsPage/> */}
+        {/* <ProfilesPage/> */}
+        <ProjectsPage/>
         {/* <LoginPage/> */}
         {/* <NavigationBar/> */}
       </View>
