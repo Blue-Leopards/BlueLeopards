@@ -1,36 +1,30 @@
 import React from 'react';
-import {
-    View,
-    Image,
-    FlatList
-  } from 'react-native';
 
-import {
-    Text,
-    Avatar, Button, Card, Title, Paragraph, Divider,
-    Subheading, Chip
-} from 'react-native-paper';
+import { View, FlatList } from 'react-native';
+
+import { Text, Avatar, Card, Paragraph, Divider, Subheading, Chip } from 'react-native-paper';
+
 
 const ProjectsPage = () => {
     return (
-        <View style={{flex: 6}}>
+        <View style={{ flex: 6 }}>
             <FlatList
                 listKey="projects"
                 data={DATA}
-                renderItem={({item}) => {
-                    return (<Project data={item}/>);
-                }}/>
+                renderItem={({ item }) => {
+                    return (<Project data={item} />);
+                }} />
         </View>
     );
 };
 
 const Project = (props) => {
-    const {name, description, interests, contributors} = props.data;
+    const { name, description, interests, contributors } = props.data;
 
     /* Take initials of project name */
     const names = name.split(" ");
     let initials = "";
-    for(let i = 0; i < names.length; i++) {
+    for (let i = 0; i < names.length; i++) {
         const word = names[i];
         initials += word[0];
     }
