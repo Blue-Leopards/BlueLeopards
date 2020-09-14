@@ -1,15 +1,16 @@
-import React from 'react';
+import * as React from 'react';
 import {
     StyleSheet,
     ScrollView,
     View,
-    Text,
     StatusBar,
     Image,
     FlatList
   } from 'react-native';
 
-
+import {     Text,
+    Avatar, Button, Card, Title, Paragraph, Divider,
+    Subheading, Chip } from 'react-native-paper';
 
 const ProfilesPage = () => {
     return (
@@ -24,27 +25,73 @@ const ProfilesPage = () => {
     );
 }
 
+// const Profile = (props) => {
+//     const pic = props.pictureURL;
+//     const {name, occupation, bio, pictureURL, interests, projects} = props.data;
+//     console.log(interests);
+//     return (
+//         <View style={{borderWidth: 1}}>
+//             <Text>{name}</Text>
+//             <Text>{occupation}</Text>
+//             <Text>{bio}</Text>
+//             <Image source={require('../public/images/default_profile.jpg')} style={{ width: 40, height: 40 }} />
+//             <Text>Interests:</Text>
+//             <FlatList
+//                 listKey="interests"
+//                 data={interests}
+//                 renderItem={({item, index}) => <Text>- {item}</Text>}/>
+//             <Text>Projects:</Text>
+//             <FlatList
+//                 listKey="projects"
+//                 data={projects}
+//                 renderItem={({item, index}) => <Text>- {item}</Text>}/>
+//         </View>
+//     );
+// }
+
+const DefaultPicture = () => 
+    <Image 
+        source={require('../public/images/default_profile.jpg')} 
+        style={{ width: 50, height: 50, borderRadius: 50 / 2 }} />
+
 const Profile = (props) => {
-    const pic = props.pictureURL;
     const {name, occupation, bio, pictureURL, interests, projects} = props.data;
-    console.log(interests);
+
+    /* Take initials of Profile */
+    const names = name.split(" ");
+    let initials = "";
+    for(let i = 0; i < names.length; i++) {
+        const word = names[i];
+        initials += word[0];
+    }
+    console.log(initials);
+
+    const LeftContent = props => <Avatar.Text size={50} label={initials} />
+
     return (
-        <View style={{borderWidth: 1}}>
-            <Text>{name}</Text>
-            <Text>{occupation}</Text>
-            <Text>{bio}</Text>
-            <Image source={require('../public/images/default_profile.jpg')} style={{ width: 40, height: 40 }} />
-            <Text>Interests:</Text>
-            <FlatList
-                listKey="interests"
-                data={interests}
-                renderItem={({item, index}) => <Text>- {item}</Text>}/>
-            <Text>Projects:</Text>
-            <FlatList
-                listKey="projects"
-                data={projects}
-                renderItem={({item, index}) => <Text>- {item}</Text>}/>
-        </View>
+        <Card style={{margin: 10}}>
+            <Card.Title title={name} subtitle={occupation} left={LeftContent} />
+            <Card.Content style={{marginBottom: 5}}>
+                <Paragraph>{bio}</Paragraph>
+            </Card.Content>
+            <View>
+                <Card.Content style={{flex:1}}>
+                    <FlatList
+                        style={{flexDirection: 'row'}}
+                        listKey="interests"
+                        data={interests}
+                        renderItem={({ item, index }) => <Chip style={{marginRight:10, backgroundColor:'#51b1a8'}}><Text style={{color:'white'}}>{item}</Text></Chip>} />
+                </Card.Content>
+                <Card.Content style={{flex:1}}>
+                    <Subheading>Projects</Subheading>
+                    <FlatList
+                        listKey="projects"
+                        data={projects}
+                        renderItem={({ item, index }) => <Paragraph>{item}</Paragraph>} />            
+                </Card.Content>
+            </View>
+            <Divider style={{marginTop: 10}} />
+        </Card>
     );
 }
 

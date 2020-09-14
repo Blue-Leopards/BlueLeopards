@@ -37,13 +37,12 @@ import AccountPage from './pages/AccountPage';
 
 const App: () => React$Node = () => {
   return (
-      <View style={{flex:1}}>
+      <View style={{flex:1, backgroundColor: "#eae9ef"}}>
         {/* <HomePage/> */}
-        {/* <ProfilesPage/> */}
+        <ProfilesPage/>
         {/* <ProjectsPage/> */}
-        <InterestsPage/>
-        
-        <NavigationBar/>
+        {/* <LoginPage/> */}
+        {/* <NavigationBar/> */}
       </View>
   );
 };
