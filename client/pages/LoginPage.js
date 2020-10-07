@@ -1,85 +1,40 @@
-// import React, { Component } from 'react';
-// import { Text, Alert, Button, View, StyleSheet } from 'react-native';
-// import { TextInput } from 'react-native-paper';
+import React from 'react';
+import {
+    View,
+    Text,
+  } from 'react-native';
+import {
+    TextInput, 
+    Button
+} from 'react-native-paper';
 
-// export default class LoginPage extends Component {
-//     constructor(props) {
-//       super(props);
-      
-//       this.state = {
-//         username: '',
-//         password: '',
-//       };
-//     }
-  
-//     go = () => {
-//              const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-//               if (reg.test(this.state.email) === true){
-//                  alert('valid');
-//              }
-//              else{
-//                  alert();
-//              }
-   
-//     }
+const MyInput = (props) => {
+    const [text, setText] = React.useState('');
+
+    return (
+        <TextInput
+            label={props.category}
+            value={text}
+            onChangeText={text => setText(text)}
+        />
+    );
+};
+
+const LoginPage = () => {
     
-//     onLogin() {
-//       const { username, password } = this.state;
-  
-//       Alert.alert('Credentials', `${username} + ${password}`);
-//     }
-  
-//     render() {
-//       return (
-//         <View style={styles.container}>
-//         <Text style={styles.inputext}>Sample Login Form</Text>
-//           <TextInput
-//             value={this.state.username}
-//             onChangeText={(username) => this.setState({ username })}
-//              label='Email'
-//             style={styles.input}
-//           />
-//           <TextInput
-//             value={this.state.password}
-//             onChangeText={(password) => this.setState({ password })}
-//             label='Password'
-//             secureTextEntry={true}
-//             style={styles.input}
-//           />
-          
-//           <Button
-//             title={'Login'}
-//             style={styles.input}
-//             onPress={this.onLogin.bind(t)}
-//           />
-//         </View>
-//       );
-//     }
-//   }
-  
-//   const styles = StyleSheet.create({
-//     container: {
-//       flex: 1,
-//       alignItems: 'center',
-//       justifyContent: 'center',
-//       backgroundColor: '#00FFFF',
-//     },
-//     input: {
-//       width: 200,
-//       height: 44,
-//       padding: 10,
-//       borderWidth: 1,
-//       borderColor: 'black',
-//       marginBottom: 10,
-//     },
-//     inputext: {
-//       width: 200,
-//       height: 44,
-//       padding: 10,
-//       textAlign:'center',
-//       fontWeight:'bold',
-//       borderWidth: 1,
-//       borderColor: 'black',
-//       marginBottom: 10,
-//     },
-//   });
+    return (
+        <View style={{padding:40}}>
+            <Text>Log In</Text>
+            <MyInput category="Email"/>
+            <MyInput category="Password"/>
+            <Button
+                mode="contained" 
+                onPress={()=>console.log("Pressed Login Button!")}
+                style={{marginTop:10}}>
+                Go
+            </Button>
+        </View>
+    );
+}
+
+export default LoginPage;

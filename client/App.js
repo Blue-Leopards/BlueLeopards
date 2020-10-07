@@ -41,9 +41,11 @@ const App: () => React$Node = () => {
         {/* <HomePage/> */}
         {/* <ProfilesPage/> */}
         {/* <ProjectsPage/> */}
-        <InterestsPage />
-        {/* <LoginPage/> */}
+        {/* <InterestsPage /> */}
         {/* <NavigationBar/> */}
+        {/* <SignUpPage/> */}
+        <LoginPage/>
+
       </View>
   );
 };
