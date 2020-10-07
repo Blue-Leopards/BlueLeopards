@@ -34,6 +34,7 @@ import InterestsPage from './pages/InterestsPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import AccountPage from './pages/AccountPage';
+import AddProjectPage from './pages/AddProjectPage';
 
 const App: () => React$Node = () => {
   return (
@@ -45,7 +46,8 @@ const App: () => React$Node = () => {
         {/* <NavigationBar/> */}
         {/* <SignUpPage/> */}
         {/* <LoginPage/> */}
-        <AccountPage/>
+        {/* <AccountPage/> */}
+        <AddProjectPage/>
 
       </View>
   );
