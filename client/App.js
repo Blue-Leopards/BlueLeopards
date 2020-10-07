@@ -1,10 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import 'react-native-gesture-handler';
 
 import React from 'react';
 import {
@@ -44,12 +38,12 @@ const App: () => React$Node = () => {
         {/* <ProfilesPage/> */}
         {/* <ProjectsPage/> */}
         {/* <InterestsPage /> */}
-        {/* <NavigationBar/> */}
+        <NavigationBar/>
         {/* <SignUpPage/> */}
         {/* <LoginPage/> */}
         {/* <AccountPage/> */}
         {/* <AddProjectPage/> */}
-        <FilterPage/>
+        {/* <FilterPage/> */}
 
       </View>
   );

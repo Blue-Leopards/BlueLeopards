@@ -12,7 +12,9 @@ const InterestsPage = () => {
                 data={DATA}
                 renderItem={({item}) => {
                     return (<Interest data={item}/>);
-                }}/>
+                }}
+                keyExtractor={(item) => item.id}
+                />
         </View>
     );
 };
@@ -100,6 +102,7 @@ const Interest = (props) => {
 
 const DATA = [
     {
+        id:'10',
         name: 'Software Engineering',
         contributors: [
             'Philip Johnson',
@@ -110,6 +113,7 @@ const DATA = [
         ]
     },
     {
+        id:'20',
         name: 'Climate Change',
         contributors: [
             'Philip Johnson',
@@ -117,6 +121,7 @@ const DATA = [
         projects: []
     },
     {
+        id:'30',
         name: 'HPC',
         contributors: [
             'Henri Casanova',
@@ -124,6 +129,7 @@ const DATA = [
         projects: []
     },
     {
+        id:'40',
         name: 'Distributed Computing',
         contributors: [
             'Henri Casanova',
@@ -132,6 +138,7 @@ const DATA = [
         projects: []
     },
     {
+        id:'50',
         name: 'Renewable Energy',
         contributors: [
             'Carleton Moore',
@@ -141,6 +148,7 @@ const DATA = [
         ]
     },
     {
+        id:'60',
         name: 'AI',
         contributors: [
             'Anthony Christe',
@@ -148,6 +156,7 @@ const DATA = [
         projects: []
     },
     {
+        id:'70',
         name: 'Visualization',
         contributors: [
             'Jason Leigh',
@@ -157,6 +166,7 @@ const DATA = [
         ]
     },
     {
+        id:'80',
         name: 'Scalable IP Networks',
         contributors: [
             'Serge Negrashov',
@@ -164,6 +174,7 @@ const DATA = [
         projects: []
     },
     {
+        id:'90',
         name: 'Educational Technology',
         contributors: [],
         projects: [
@@ -171,6 +182,7 @@ const DATA = [
         ]
     },
     {
+        id:'100',
         name: 'Distributed computing',
         contributors: [],
         projects: [
@@ -178,6 +190,7 @@ const DATA = [
         ]
     },
     {
+        id:'110',
         name: 'Unity',
         contributors: [],
         projects: [

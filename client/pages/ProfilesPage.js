@@ -3,7 +3,8 @@ import * as React from 'react';
 import {
     View,
     Image,
-    FlatList
+    FlatList,
+    VirtualizedList
 } from 'react-native';
 
 import {
@@ -20,14 +21,17 @@ const ProfilesPage = () => {
                 data={DATA}
                 renderItem={({ item }) => {
                     return (<Profile data={item} />);
-                }} />
+                }}
+                keyExtractor={(item) => item.id}
+                />
         </View>
     );
 }
 
+
 const Profile = (props) => {
     const { name, occupation, bio, pictureURL, interests, projects } = props.data;
-
+    console.log(props);
     /* Take initials of Profile */
     const names = name.split(" ");
     let initials = "";

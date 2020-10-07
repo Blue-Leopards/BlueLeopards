@@ -13,7 +13,9 @@ const ProjectsPage = () => {
                 data={DATA}
                 renderItem={({ item }) => {
                     return (<Project data={item} />);
-                }} />
+                }} 
+                keyExtractor={(item) => item.id}
+                />
         </View>
     );
 };
@@ -72,6 +74,7 @@ const Project = (props) => {
 
 const DATA = [
     {
+        id:'10',
         pictureURL: '../public/images/default_project.png',
         name: 'Open Power Quality',
         description: 'Open source hardware and software for distributed power quality data collection, analysis, and visualization.',
@@ -79,6 +82,7 @@ const DATA = [
         contributors: ['Philip Johnson', 'Anthony Christe', 'Serge Negrashov']
     },
     {
+        id:'20',
         pictureURL: '../public/images/default_project.png',
         name: 'RadGrad',
         description: 'Growing awesome computer scientists, one graduate at a time.',
@@ -86,6 +90,7 @@ const DATA = [
         contributors: ['Philip Johnson', 'Carleton Moore']
     },
     {
+        id:'30',
         pictureURL: '../public/images/default_project.png',
         name: 'WRENCH',
         description: 'WRENCH is an open-source library for developing simulators for large-scale scientific computation.',
@@ -93,6 +98,7 @@ const DATA = [
         contributors: ['Henri Casanova']
     },
     {
+        id:'40',
         pictureURL: '../public/images/default_project.png',
         name: 'Cyber Canoe',
         description: 'Software for Unity projects involving stereoscopic resolution driven by 9 PCs with a GeForce 980 graphics card.',
