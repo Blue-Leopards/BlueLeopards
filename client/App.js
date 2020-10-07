@@ -44,7 +44,8 @@ const App: () => React$Node = () => {
         {/* <InterestsPage /> */}
         {/* <NavigationBar/> */}
         {/* <SignUpPage/> */}
-        <LoginPage/>
+        {/* <LoginPage/> */}
+        <AccountPage/>
 
       </View>
   );

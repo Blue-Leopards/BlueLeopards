@@ -1,11 +1,11 @@
 import React from 'react';
 import {
     View,
-    Text,
   } from 'react-native';
 import {
     TextInput, 
-    Button
+    Button,
+    Title
 } from 'react-native-paper';
 
 const MyInput = (props) => {
@@ -24,7 +24,7 @@ const SignUpPage = () => {
     
     return (
         <View style={{padding:40}}>
-            <Text>Create an Account!</Text>
+            <Title>Create an Account!</Title>
             <MyInput category="Email"/>
             <MyInput category="Password"/>
             <Button
