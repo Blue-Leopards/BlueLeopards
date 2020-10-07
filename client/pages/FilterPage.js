@@ -23,27 +23,31 @@ const MyInput = (props) => {
     );
 };
 
-const AddProjectPage = () => {
+const FilterPage = () => {
 
     return (
         <View style={{padding:40}}>
-            <Title>Add A Project</Title>
-            <MyInput category="Name"/>
-            <MyInput category="Picture URL"/>
-            <MyInput category="Homepage"/>
-            <MyInput category="Description"/>
-
+            <View>
+            <Title>Filter by Interests</Title>
             <MyInput category="Interests"/>
-            <MyInput category="Contributors"/>
 
             <Button
                 mode="contained" 
-                onPress={()=>console.log("Pressed Add Project Button!")}
+                onPress={()=>console.log("Pressed Filter Button!")}
                 style={{marginTop:10}}>
-                Create
+                Submit
             </Button>
+            </View>
+
+            <View style={{marginTop: 40}}>
+                <Title>
+                    Profiles
+                </Title>
+            </View>
         </View>
+        
+    
     );
 }
 
-export default AddProjectPage;
+export default FilterPage;
