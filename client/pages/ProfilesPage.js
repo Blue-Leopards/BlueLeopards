@@ -9,11 +9,11 @@ import {
 
 import {
     Text, Avatar, Card, Paragraph, Divider,
-    Subheading, Chip
+    Subheading, Chip, Button
 } from 'react-native-paper';
 
 
-const ProfilesPage = () => {
+const ProfilesPage = ({navigation}) => {
     return (
         <View style={{ flex: 6 }}>
             <FlatList
@@ -31,7 +31,6 @@ const ProfilesPage = () => {
 
 const Profile = (props) => {
     const { name, occupation, bio, pictureURL, interests, projects } = props.data;
-    console.log(props);
     /* Take initials of Profile */
     const names = name.split(" ");
     let initials = "";
