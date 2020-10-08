@@ -2,10 +2,46 @@ import React from 'react';
 
 import { View, FlatList } from 'react-native';
 
-import { Text, Avatar, Card, Paragraph, Divider, Subheading, Chip } from 'react-native-paper';
+import { Text, Avatar, Card, Paragraph, Divider, Subheading, Chip, Button } from 'react-native-paper';
 
 
-const ProjectsPage = () => {
+const Nav = ({ navigation}) =>
+    <View style={{
+        height: 75,
+        backgroundColor: 'lightgrey',
+        flexDirection: 'row'
+    }}>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Profiles')}>Profiles</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Projects')}>Projects</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Interests')}>Interests</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button>Settings</Button>
+        </View>
+    </View>;
+
+const ProjectsPage = ({ navigation }) => {
     return (
         <View style={{ flex: 6 }}>
             <FlatList
@@ -16,6 +52,7 @@ const ProjectsPage = () => {
                 }} 
                 keyExtractor={(item) => item.id}
                 />
+            <Nav navigation={navigation}/>
         </View>
     );
 };
@@ -59,11 +96,6 @@ const Project = (props) => {
         </Card>
     );
 }
-
-
-
-
-
 
 
 

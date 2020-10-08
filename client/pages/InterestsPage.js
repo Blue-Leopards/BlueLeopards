@@ -2,9 +2,46 @@ import React from 'react';
 
 import { View, FlatList } from 'react-native';
 
-import { Text, Avatar, Card, Title, Paragraph, Divider, Subheading } from 'react-native-paper';
+import { Text, Avatar, Card, Title, Paragraph, Divider, Subheading, Button } from 'react-native-paper';
 
-const InterestsPage = () => {
+
+const Nav = ({ navigation }) =>
+    <View style={{
+        height: 75,
+        backgroundColor: 'lightgrey',
+        flexDirection: 'row'
+    }}>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Profiles')}>Profiles</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Projects')}>Projects</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Interests')}>Interests</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button>Settings</Button>
+        </View>
+    </View>;
+
+const InterestsPage = ({ navigation }) => {
     return (
         <View style={{flex: 6}}>
             <FlatList
@@ -15,33 +52,10 @@ const InterestsPage = () => {
                 }}
                 keyExtractor={(item) => item.id}
                 />
+            <Nav navigation={navigation}/>
         </View>
     );
 };
-
-// const Interest = (props) => {
-//     const {name, contributors, projects } = props.data;
-//     return (
-//         <View style={{borderWidth: 1}}>
-//             <Text>{name}</Text>
-//             { contributors.length === 0
-//                 ? <></>
-//                 : <Text>Contributors:</Text>}
-//             <FlatList
-//                 listKey="contributors"
-//                 data={contributors}
-//                 renderItem={({item, index}) => <Text>- {item}</Text>}/>
-//             { projects.length === 0 
-//                 ? <></>
-//                 : <Text>Projects:</Text>
-//             }
-//             <FlatList
-//                 listKey="projects"
-//                 data={projects}
-//                 renderItem={({item, index}) => <Text>- {item}</Text>}/>
-//         </View>
-//     );
-// };
 
 const Interest = (props) => {
     const { name, contributors, projects } = props.data;

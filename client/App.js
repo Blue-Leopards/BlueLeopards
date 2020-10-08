@@ -20,10 +20,12 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import { Button } from 'react-native-paper';
+
 
 /* Import my components */
 import HomePage from './pages/HomePage';
-import NavigationBar from './pages/NavigationBar';
+// import NavigationBar from './pages/NavigationBar';
 import ProfilesPage from './pages/ProfilesPage';
 import ProjectsPage from './pages/ProjectsPage';
 import InterestsPage from './pages/InterestsPage';
@@ -34,6 +36,9 @@ import AddProjectPage from './pages/AddProjectPage';
 import FilterPage from './pages/FilterPage';
 
 const Stack = createStackNavigator();
+
+
+
 
 const App: () => React$Node = () => {
   return (

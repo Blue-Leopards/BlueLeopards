@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import {
     View,
     Image,
@@ -13,6 +12,42 @@ import {
 } from 'react-native-paper';
 
 
+const Nav = ({navigation}) =>
+    <View style={{
+        height: 75,
+        backgroundColor: 'lightgrey',
+        flexDirection: 'row'
+    }}>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Profiles')}>Profiles</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Projects')}>Projects</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Interests')}>Interests</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button>Settings</Button>
+        </View>
+    </View>;
+
 const ProfilesPage = ({navigation}) => {
     return (
         <View style={{ flex: 6 }}>
@@ -24,6 +59,7 @@ const ProfilesPage = ({navigation}) => {
                 }}
                 keyExtractor={(item) => item.id}
                 />
+            <Nav navigation={navigation}/>
         </View>
     );
 }
@@ -67,12 +103,6 @@ const Profile = (props) => {
         </Card>
     );
 }
-
-
-
-
-
-
 
 
 
