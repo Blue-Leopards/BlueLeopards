@@ -1,52 +1,19 @@
 import * as React from 'react';
 import {
     View,
-    Image,
     FlatList,
-    VirtualizedList
 } from 'react-native';
 
 import {
-    Text, Avatar, Card, Paragraph, Divider,
-    Subheading, Chip, Button
+    Text, 
+    Avatar, 
+    Card, 
+    Paragraph, 
+    Divider,
+    Subheading, 
+    Chip, 
+    Button
 } from 'react-native-paper';
-
-
-const Nav = ({navigation}) =>
-    <View style={{
-        height: 75,
-        backgroundColor: 'lightgrey',
-        flexDirection: 'row'
-    }}>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Profiles')}>Profiles</Button>
-        </View>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Projects')}>Projects</Button>
-        </View>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Interests')}>Interests</Button>
-        </View>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button>Settings</Button>
-        </View>
-    </View>;
 
 const ProfilesPage = ({navigation}) => {
     return (
@@ -63,7 +30,6 @@ const ProfilesPage = ({navigation}) => {
         </View>
     );
 }
-
 
 const Profile = (props) => {
     const { name, occupation, bio, pictureURL, interests, projects } = props.data;
@@ -104,8 +70,41 @@ const Profile = (props) => {
     );
 }
 
-
-
+const Nav = ({navigation}) =>
+    <View style={{
+        height: 75,
+        backgroundColor: 'lightgrey',
+        flexDirection: 'row'
+    }}>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Profiles')}>Profiles</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Projects')}>Projects</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Interests')}>Interests</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button>Settings</Button>
+        </View>
+    </View>;
 
 const DATA = [
     {

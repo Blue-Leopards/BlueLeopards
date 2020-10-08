@@ -2,44 +2,14 @@ import React from 'react';
 
 import { View, FlatList } from 'react-native';
 
-import { Text, Avatar, Card, Paragraph, Divider, Subheading, Chip, Button } from 'react-native-paper';
-
-
-const Nav = ({ navigation}) =>
-    <View style={{
-        height: 75,
-        backgroundColor: 'lightgrey',
-        flexDirection: 'row'
-    }}>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Profiles')}>Profiles</Button>
-        </View>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Projects')}>Projects</Button>
-        </View>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Interests')}>Interests</Button>
-        </View>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button>Settings</Button>
-        </View>
-    </View>;
+import { Text, 
+    Avatar, 
+    Card, 
+    Paragraph,
+    Divider, 
+    Subheading, 
+    Chip, 
+    Button } from 'react-native-paper';
 
 const ProjectsPage = ({ navigation }) => {
     return (
@@ -97,12 +67,41 @@ const Project = (props) => {
     );
 }
 
-
-
-
-
-
-
+const Nav = ({ navigation}) =>
+    <View style={{
+        height: 75,
+        backgroundColor: 'lightgrey',
+        flexDirection: 'row'
+    }}>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Profiles')}>Profiles</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Projects')}>Projects</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button onPress={() => navigation.navigate('Interests')}>Interests</Button>
+        </View>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Button>Settings</Button>
+        </View>
+    </View>;
 
 const DATA = [
     {
