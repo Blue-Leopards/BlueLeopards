@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, } from 'react-native';
-import Logout from '../components/Logout';
+import { Logout } from '../components/Logout';
 
 const styles = { 
     flex:1,

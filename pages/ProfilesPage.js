@@ -18,14 +18,15 @@ import {
 const ProfilesPage = ({navigation}) => {
     return (
         <View style={{ flex: 6 }}>
-            <FlatList
+            {/* <FlatList
                 listKey="profiles"
                 data={DATA}
                 renderItem={({ item }) => {
                     return (<Profile data={item} />);
                 }}
                 keyExtractor={(item) => item.id}
-                />
+                /> */}
+            <Text>yo yo</Text>
             <Nav navigation={navigation}/>
         </View>
     );

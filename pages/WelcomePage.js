@@ -8,9 +8,9 @@ export function WelcomeView({ navigation }) {
   const { user, signUp, signIn } = useAuth();
 
   useEffect(() => {
-    // If there is a user logged in, go to the Projects page.
+    // If there is a user logged in, go to the Profiles page.
     if (user != null) {
-      navigation.navigate("Projects");
+      navigation.navigate("Profiles");
     }
   }, [user]);
 
@@ -38,7 +38,7 @@ export function WelcomeView({ navigation }) {
 
   return (
     <View>
-      <Text>Signup or Signin:</Text>
+      <Text>Signup or Signin, pussy:</Text>
       <View style={{ padding: 5 }}>
         <TextInput
           onChangeText={setEmail}

@@ -15,7 +15,7 @@ export function getRealmApp() {
         version: "0",
       },
     };
-    
+    console.log(Realm.App);
     app = new Realm.App(appConfig);
   }
   return app;

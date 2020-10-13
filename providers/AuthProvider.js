@@ -20,7 +20,16 @@ const AuthProvider = ({ children }) => {
     if (!user) {
       return;
     }
+    console.log('userId:');
+    console.log(user.id);
+    console.log('user:'); console.log(user);
 
+    Realm.open({
+      sync: {user, partitionValue: `user=${user.id}`}
+    }).then((idk) => {
+      console.log('Called Realm.open:');
+      console.log(idk);
+    })
     // Return a cleanup function that closes the user realm.
     return () => {
       // cleanup function
