@@ -6,7 +6,7 @@ let app;
 export function getRealmApp() {
   if (app === undefined) {
 
-    const appId = "blueleopards-awagv";
+    const appId = "blueleopards-fmfnh";
     const appConfig = {
       id: appId,
       timeout: 10000,
