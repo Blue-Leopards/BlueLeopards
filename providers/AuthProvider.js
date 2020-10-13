@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import Realm from "realm";
 import { getRealmApp } from "../getRealmApp";
+import { Alert } from "react-native";
 
 // Access the Realm App.
 const app = getRealmApp();
@@ -20,16 +21,11 @@ const AuthProvider = ({ children }) => {
     if (!user) {
       return;
     }
-    console.log('userId:');
-    console.log(user.id);
-    console.log('user:'); console.log(user);
+    //console.log(Object.getOwnPropertyNames(user));
 
-    Realm.open({
-      sync: {user, partitionValue: `user=${user.id}`}
-    }).then((idk) => {
-      console.log('Called Realm.open:');
-      console.log(idk);
-    })
+    // Realm.open().then((realm) => {
+    //   console.log(Object.getOwnPropertyNames(realm.objects));
+    // })
     // Return a cleanup function that closes the user realm.
     return () => {
       // cleanup function
@@ -40,6 +36,16 @@ const AuthProvider = ({ children }) => {
       }
     };
   }, [user]);
+
+  const getProfiles = async () => {
+    let data;
+    try {
+      data = await user.functions.fetchProfiles();
+    } catch (err) {
+      Alert.alert("An error occurred while fetching Profiles", err);
+    }
+    return data;
+  };
 
   // The signIn function takes an email and password and uses the
   // emailPassword authentication provider to log in.
@@ -76,6 +82,7 @@ const AuthProvider = ({ children }) => {
         signUp,
         signIn,
         signOut,
+        getProfiles,
         user,
       }}
     >

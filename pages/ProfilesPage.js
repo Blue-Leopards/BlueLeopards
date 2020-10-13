@@ -15,7 +15,18 @@ import {
     Button
 } from 'react-native-paper';
 
+import { useAuth } from "../providers/AuthProvider";
+
 const ProfilesPage = ({navigation}) => {
+    const [profiles, setProfiles] = React.useState([]);
+    const { getProfiles } = useAuth();
+
+    React.useEffect(() => {
+        const profilesData = getProfiles();
+        setProfiles(profilesData);
+    }, []);
+    console.log("profiles:");
+    console.log(profiles);
     return (
         <View style={{ flex: 6 }}>
             {/* <FlatList
@@ -26,7 +37,7 @@ const ProfilesPage = ({navigation}) => {
                 }}
                 keyExtractor={(item) => item.id}
                 /> */}
-            <Text>yo yo</Text>
+            <Text></Text>
             <Nav navigation={navigation}/>
         </View>
     );
