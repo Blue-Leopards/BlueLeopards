@@ -102,7 +102,7 @@ const Nav = ({navigation}) =>
             justifyContent: 'center',
             alignItems: 'center'
         }}>
-            <Button>Settings</Button>
+            <Button onPress={() => navigation.navigate('Settings')}>Settings</Button>
         </View>
     </View>;
 

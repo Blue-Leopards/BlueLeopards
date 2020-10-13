@@ -8,9 +8,9 @@ import { View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 
 
-/* Import my components */
+// Import Views
 import HomePage from './pages/HomePage';
-// import NavigationBar from './pages/NavigationBar';
+//import WelcomePage from './pages/WelcomePage';
 import ProfilesPage from './pages/ProfilesPage';
 import ProjectsPage from './pages/ProjectsPage';
 import InterestsPage from './pages/InterestsPage';
@@ -19,6 +19,7 @@ import SignUpPage from './pages/SignUpPage';
 import AccountPage from './pages/AccountPage';
 import AddProjectPage from './pages/AddProjectPage';
 import FilterPage from './pages/FilterPage';
+import SettingsPage from './pages/SettingsPage';
 
 const Stack = createStackNavigator();
 
@@ -69,6 +70,10 @@ const App: () => React$Node = () => {
           <Stack.Screen
             name="Filter"
             component={FilterPage}
+            />
+          <Stack.Screen
+            name="Settings"
+            component={SettingsPage}
             />
         </Stack.Navigator>
       </View>
