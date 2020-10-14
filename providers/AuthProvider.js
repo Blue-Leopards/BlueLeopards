@@ -170,6 +170,22 @@ const AuthProvider = ({ children }) => {
     });
   }
 
+  const addProfileProject = data => {
+    const realm = realmRef.current;
+    const newProfileProject = new ProfileProject({
+      profileId: data.profileId,
+      profileEmail: data.profileEmail,
+      projectId: data.projectId,
+      projectName: data.projectName
+    });
+    realm.write(() => {
+      realm.create(
+        "ProfileProject",
+        newProfileProject
+      );
+    });
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -180,6 +196,7 @@ const AuthProvider = ({ children }) => {
         createProject,
         updateUser,
         addProfileInterest,
+        addProfileProject,
         user,
         profiles,
         projects,
