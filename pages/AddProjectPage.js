@@ -1,13 +1,13 @@
 import React from 'react';
-import {
-    View,
-} from 'react-native';
+import { View } from 'react-native';
 
 import {
     TextInput,
     Button,
     Title
 } from 'react-native-paper';
+
+import { useAuth } from "../providers/AuthProvider";
 
 
 const MyInput = (props) => {
@@ -24,21 +24,43 @@ const MyInput = (props) => {
 };
 
 const AddProjectPage = () => {
+    const { createProject } = useAuth();
+
+    const [name, setName ] = React.useState("");
+    const [description, setDescription ] = React.useState("");
+    const [homePage, setHomePage ] = React.useState("");
+    const [picture, setPicture ] = React.useState("");
 
     return (
         <View style={{padding:40}}>
             <Title>Add A Project</Title>
-            <MyInput category="Name"/>
-            <MyInput category="Picture URL"/>
-            <MyInput category="Homepage"/>
-            <MyInput category="Description"/>
 
+            <TextInput
+                label="Name"
+                value={name}
+                onChangeText={text => setName(text)}
+            />
+            <TextInput
+                label="Description"
+                value={description}
+                onChangeText={text => setDescription(text)}
+            />
+            <TextInput
+                label="Homepage"
+                value={homePage}
+                onChangeText={text => setHomePage(text)}
+            />
+            <TextInput
+                label="Picture URL"
+                value={picture}
+                onChangeText={text => setPicture(text)}
+            />
             <MyInput category="Interests"/>
             <MyInput category="Contributors"/>
 
             <Button
                 mode="contained" 
-                onPress={()=>console.log("Pressed Add Project Button!")}
+                onPress={()=> {createProject()}}
                 style={{marginTop:10}}>
                 Create
             </Button>

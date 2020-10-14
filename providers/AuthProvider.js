@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import Realm from "realm";
 import { getRealmApp } from "../getRealmApp";
 import { Alert } from "react-native";
+import { Project } from "../schemas/Project";
 
 // Access the Realm App.
 const app = getRealmApp();
@@ -121,6 +122,26 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const createProject = data => {
+    // const realm = realmRef.current;
+
+    const newObject = new Project({
+      name: "Test Project 2",
+      partition: "public",
+      homePage: "",
+      picture: "",
+      description: "A test."
+    });
+    console.log(newObject);
+    // realm.write(() => {
+
+    // realm.create(
+    //     "Project",
+    //     new
+    //   );
+    // });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -128,6 +149,7 @@ const AuthProvider = ({ children }) => {
         signIn,
         signOut,
         getProfiles,
+        createProject,
         user,
         profiles,
         projects,
