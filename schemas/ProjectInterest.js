@@ -1,6 +1,6 @@
 import { ObjectId } from "bson";
 
-class Project {
+class ProjectInterest {
   /**
    *
    * @param {string} name The name of the task
@@ -8,33 +8,33 @@ class Project {
    * @param {ObjectId} id The ObjectId to create this task with
    */
   constructor({
-    name,
     partition = "public",
-    homePage,
-    picture,
-    description,
+    interestId,
+    interestName,
+    projectId,
+    projectName,
     id = new ObjectId().toString(),
   }) {
     this._partition = partition;
     this._id = id;
-    this.name = name;
-    this.homePage = homePage;
-    this.picture = picture;
-    this.description = description;
+    this.interestId = interestId;
+    this.interestName = interestName;
+    this.projectId = projectId;
+    this.projectName = projectName;
   }
 
   static schema = {
-    name: "Project",
+    name: "ProjectInterest",
     properties: {
       _id: "string",
       _partition: "string",
-      name: "string",
-      homePage: "string",
-      picture: "string",
-      description: "string"
+      interestId: "string",
+      interestName: "string",
+      projectId: "string",
+      projectName: "string"
     },
     primaryKey: "_id",
   };
 }
 
-export { Project };
+export { ProjectInterest };

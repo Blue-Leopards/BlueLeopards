@@ -133,6 +133,9 @@ const AuthProvider = ({ children }) => {
       description: "A test."
     });
     console.log(newObject);
+
+
+    
     // realm.write(() => {
 
     // realm.create(
