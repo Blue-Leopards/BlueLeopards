@@ -3,6 +3,7 @@ import Realm from "realm";
 import { getRealmApp } from "../getRealmApp";
 import { Alert } from "react-native";
 import { Project } from "../schemas/Project";
+import { ProfileInterest } from "../schemas/ProfileInterest";
 
 // Access the Realm App.
 const app = getRealmApp();
@@ -134,8 +135,6 @@ const AuthProvider = ({ children }) => {
     });
     console.log(newObject);
 
-
-
     // realm.write(() => {
 
     // realm.create(
@@ -153,6 +152,23 @@ const AuthProvider = ({ children }) => {
       Alert.alert("An error occurred while updating account", err);
     }
   };
+  const addProfileInterest = data => {
+    const realm = realmRef.current;
+
+    const newProfileInterest = new ProfileInterest({
+      profileId: data.profileId,
+      profileEmail: data.profileEmail,
+      interestId: data.interestId,
+      interestName: data.interestName,
+    });
+
+    realm.write(() => {
+      realm.create(
+        "ProfileInterest",
+        newProfileInterest
+      );
+    });
+  }
 
   return (
     <AuthContext.Provider
@@ -163,6 +179,7 @@ const AuthProvider = ({ children }) => {
         getProfiles,
         createProject,
         updateUser,
+        addProfileInterest,
         user,
         profiles,
         projects,

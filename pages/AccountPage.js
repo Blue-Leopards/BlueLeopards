@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { TextInput, Button, Title, Text } from 'react-native-paper';
+import { TextInput, Button, Title, Text, Subheading } from 'react-native-paper';
 import { useAuth } from "../providers/AuthProvider";
 import { useNavigation } from "@react-navigation/native";
 
+import { Modal, Portal, Provider } from 'react-native-paper';
+
 const AccountPage = () => {
-    const { user, updateUser, profiles, profileInterest, profileProject } = useAuth();
+    const { user, updateUser, profiles, interests, profileInterest, profileProject, addProfileInterest } = useAuth();
     const navigation = useNavigation();
+
+    const [interestVisible, setInterestVisible] = React.useState(false);
+    const [projectVisible, setProjectVisible] = React.useState(false);
+
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
 
     // Find User's Profile
     const userProfile = profiles.filter(profile => {
@@ -20,6 +28,10 @@ const AccountPage = () => {
     const userProjects = profileProject.filter(item => {
         return item.profileId === user.customData._id;
     })
+
+    // Find interests that user does not have
+    const nonInterests = getNonInterests(interests, userInterests);
+
     // Find User's updated Account Data
     const {_id, email, firstName, lastName, bio, title, picture} = userProfile;
     
@@ -30,14 +42,14 @@ const AccountPage = () => {
 
 
     return (
-        <View style={{padding:30}}>
+        <View style={{ flex: 1, padding: 10 }}>
             <TextInput
                 label="Email"
                 value={userData.email}
                 onChangeText={text => setUserData({...userData, email: text})}
                 />
             <TextInput
-                label="FirstName"
+                label="First Name"
                 value={userData.firstName}
                 onChangeText={text => setUserData({...userData, firstName: text})}
                 />
@@ -61,7 +73,10 @@ const AccountPage = () => {
                 value={userData.picture}
                 onChangeText={text => setUserData({...userData, picture: text})}
                 />
-            <Button
+            { interestVisible || projectVisible
+                ? null
+                :
+                <Button
                 mode="contained" 
                 onPress={()=> {
                     updateUser({
@@ -78,29 +93,104 @@ const AccountPage = () => {
                 style={{marginTop:10}}>
                 Update
             </Button>
-                <Interests title="Interests" data={userInterests} id={_id} />
-                <Projects title="Projects" data={userProjects} id={_id} />
-                
+            }
 
+            <View style={{
+                flexDirection: 'row',
+                borderWidth:1,
+                marginTop:10,
+            }}>
+                <Button labelStyle={{color:"white"}} color="#51b1a8" mode="contained" compact={true} style={{flex:1}} onPress={() => setInterestVisible(true)}>
+                    Add Interest
+                </Button>
+                <Button labelStyle={{color:"white"}} color="#51b1a8" mode="contained" compact={true} style={{flex:1}} onPress={()=> setProjectVisible(true)}>
+                    Add Project
+                </Button>
+            </View>
+
+            <View style={{
+                flexDirection: 'row',
+            }}>
+            <Interests title="Interests" data={userInterests} id={_id} />
+            <Projects title="Projects" data={userProjects} id={_id} />
+            </View>
+            <Provider>
+                <Portal>
+                    <Modal visible={interestVisible} onDismiss={() => setInterestVisible(false)}>
+                        <View style={{backgroundColor: 'white', height:'80%', width:'100%'}}>
+                        <Subheading>Add Interests!</Subheading>
+                        <FlatList
+                            listKey={`nonInterests:${_id}`}
+                            data={nonInterests}
+                            renderItem={({ item }) => {
+                            return (
+                                    <Button key={item._id} onPress={() => {
+                                        console.log(`Adding Interest: ${item.name} To: ${user.customData.email}`);
+                                        addProfileInterest({
+                                            profileId: _id,
+                                            profileEmail: email,
+                                            interestId: item._id,
+                                            interestName: item.name
+                                        })
+                                    }}>{item.name}</Button>
+                            );}}
+                            keyExtractor={(item) => item._id}
+                         />
+                        </View>
+                    </Modal>
+                    <Modal visible={projectVisible} onDismiss={() => setProjectVisible(false)}>
+                        <View style={{backgroundColor: 'white', height:'80%', width:'100%'}}>
+                        <Text>Projects Modal</Text>  
+                        </View>
+                    </Modal>
+                </Portal>
+            </Provider>
         </View>
     );
-}
+};
+
+// Given the interest collection and a user's interests, return the interests
+// that user does not have.
+const getNonInterests = (interestCollection, userInterests) => {
+    let nonInterests;
+    let interestIds = [];
+
+    userInterests.forEach(interest => {
+        interestIds.push(interest.interestId);
+    });
+
+    nonInterests = interestCollection.filter(interest => {
+        let isNotInterest = true;
+        
+        interestIds.forEach(id => {
+            if(interest._id === id) {
+                isNotInterest = false;
+            }
+        });
+        return isNotInterest;
+    });
+    return nonInterests;
+};
 
 const Interests = ({title, id, data}) => {
     let componentToRender;
-    console.log(`data length: ${data.length}`);
     if(data.length === 0) {
         componentToRender = null;
     } else {
         componentToRender = (
-            <View>
-                <Title>{title}</Title>
+            <View style={{ borderWidth: 1, flex:1, height:100 }}>
+                <Subheading>{title}</Subheading>
                 <FlatList
                     listKey={`interests:${id}`}
                     data={data}
-                    renderItem={({ item }) => <Text key={item._id}>{item.interestName}</Text>} 
+                    renderItem={({ item }) => {
+                        return (
+                            <View key={item._id} style={{ borderWidth: 1, flex: 1, padding:5 }}>
+                                <Text >{item.interestName}</Text>
+                            </View>
+                        );}}
                     keyExtractor={(item) => item._id}
-                    />
+                />
             </View>
         );
     }
@@ -108,17 +198,21 @@ const Interests = ({title, id, data}) => {
 }
 const Projects = ({title, id, data}) => {
     let componentToRender;
-    console.log(`data length: ${data.length}`);
     if(data.length === 0) {
         componentToRender = null;
     } else {
         componentToRender = (
-            <View>
-                <Title>{title}</Title>
+            <View style={{borderWidth:1, flex:1, height:100}}>
+                <Subheading>{title}</Subheading>
                 <FlatList
                     listKey={`projects:${id}`}
                     data={data}
-                    renderItem={({ item }) => <Text key={item._id}>{item.projectName}</Text>} 
+                    renderItem={({ item }) => {
+                        return (
+                            <View key={item._id} style={{ borderWidth: 1, flex: 1, padding:5 }}>
+                                <Text >{item.projectName}</Text>
+                            </View>
+                        );}}
                     keyExtractor={(item) => item._id}
                     />
             </View>
