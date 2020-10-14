@@ -11,16 +11,20 @@ import { Text,
     Chip, 
     Button } from 'react-native-paper';
 
+import { useAuth } from "../providers/AuthProvider";
+
 const ProjectsPage = ({ navigation }) => {
+    const { projects } = useAuth();
+
     return (
         <View style={{ flex: 6 }}>
             <FlatList
                 listKey="projects"
-                data={DATA}
+                data={projects}
                 renderItem={({ item }) => {
                     return (<Project data={item} />);
                 }} 
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item._id}
                 />
             <Nav navigation={navigation}/>
         </View>
@@ -28,7 +32,7 @@ const ProjectsPage = ({ navigation }) => {
 };
 
 const Project = (props) => {
-    const { name, description, interests, contributors } = props.data;
+    const { _id, name, description, homePage, picture } = props.data;
 
     /* Take initials of project name */
     const names = name.split(" ");
@@ -39,7 +43,10 @@ const Project = (props) => {
     }
 
     const LeftContent = props => <Avatar.Text size={50} label={initials} />
+    const interests = getInterests(_id);
+    const profiles = getProfiles(_id);
 
+    getProfiles(_id);
     return (
         <Card style={{ margin: 10 }}>
             <Card.Title title={name} left={LeftContent} />
@@ -50,16 +57,16 @@ const Project = (props) => {
                 <Card.Content style={{ flex: 1 }}>
                     <FlatList
                         style={{ flexDirection: 'row' }}
-                        listKey="interests"
+                        listKey={`interests:${_id}`}
                         data={interests}
-                        renderItem={({ item, index }) => <Chip style={{ marginRight: 10, backgroundColor: '#51b1a8' }}><Text style={{ color: 'white' }}>{item}</Text></Chip>} />
+                        renderItem={({ item, index }) => <Chip key={item.id} style={{ marginRight: 10, backgroundColor: '#51b1a8' }}><Text style={{ color: 'white' }}>{item.name}</Text></Chip>} />
                 </Card.Content>
                 <Card.Content style={{ flex: 1 }}>
                     <Subheading>Contributors</Subheading>
                     <FlatList
-                        listKey="contributors"
-                        data={contributors}
-                        renderItem={({ item, index }) => <Paragraph>{item}</Paragraph>} />
+                        listKey={`contributors:${_id}`}
+                        data={profiles}
+                        renderItem={({ item, index }) => <Paragraph key={item.id}>{item.name}</Paragraph>} />
                 </Card.Content>
             </View>
             <Divider style={{ marginTop: 10 }} />
@@ -67,6 +74,53 @@ const Project = (props) => {
     );
 }
 
+const getInterests = (projectId) => {
+    const { projectInterest } = useAuth();
+    let interests = [];
+    projectInterest
+        .filter(item => {
+            return item.projectId === projectId;
+        })
+        .forEach(item => {
+            interests.push({name: item.interestName, id: `${item.projectId}${item.interestId}`});
+        });
+    return interests;
+};
+
+const getProfiles = (projectId) => {
+    const { profileProject } = useAuth();
+
+    let profileIds = [];
+    let profileObjects = [];
+
+    // First get all profile Ids
+    profileProject
+        .filter(item => item.projectId === projectId)
+        .forEach(item => {
+            profileIds.push(item.profileId)
+        });
+    // Loop through profiles collection and get all names
+    profileIds
+        .forEach(id => {
+            const temp = getProfileData(id);
+            profileObjects.push({
+                name: temp.name,
+                id: `${projectId}${temp.id}`
+            });
+        });
+
+    return profileObjects;
+};
+
+const getProfileData = (profileId) => {
+    const { profiles } = useAuth();
+    const profile = profiles.filter(item => item._id === profileId);
+    let name;
+    if (profile.length === 1) {
+        name = profile[0].firstName + " " + profile[0].lastName;
+    }
+    return { name, id: `${profile[0]._id}`};
+};
 const Nav = ({ navigation}) =>
     <View style={{
         height: 75,
@@ -99,7 +153,7 @@ const Nav = ({ navigation}) =>
             justifyContent: 'center',
             alignItems: 'center'
         }}>
-            <Button>Settings</Button>
+            <Button onPress={() => navigation.navigate('Settings')}>Settings</Button>
         </View>
     </View>;
 
