@@ -26,17 +26,13 @@ const AccountPage = () => {
         return profile._id === user.customData._id;
     })[0];
 
-    console.log("user profile");
-    console.log(userProfile);
-
     const {_id, email, firstName, lastName, bio, title, picture} = userProfile;
     
     const [ userData, setUserData ] = useState({
         _id, email, firstName, lastName, bio, title, picture
     });
 
-    console.log("user data");
-    console.log(userData);
+
     return (
         <View style={{padding:40}}>
             <Title>Account Settings</Title>
