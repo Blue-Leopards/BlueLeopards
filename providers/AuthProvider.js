@@ -15,6 +15,9 @@ const AuthContext = React.createContext(null);
 // use the useAuth() hook to access the auth value.
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(app.currentUser);
+  const [profiles, setProfiles] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [interests, setInterests] = useState([]);
   const realmRef = useRef(null);
 
   useEffect(() => {
@@ -22,10 +25,31 @@ const AuthProvider = ({ children }) => {
       return;
     }
     //console.log(Object.getOwnPropertyNames(user));
+    const config = {
+      sync: {
+        user,
+        partitionValue: 'public',
+      },
+    };
 
-    // Realm.open().then((realm) => {
-    //   console.log(Object.getOwnPropertyNames(realm.objects));
-    // })
+    Realm.open(config).then((realm) => {
+      //console.log(Object.getOwnPropertyNames(realm.objects("Profile")));
+      realmRef.current = realm;
+      const profiles = realm.objects("Profile");
+      const projects = realm.objects("Project");
+      const interests = realm.objects("Interest");
+
+      profiles.addListener(() => {
+        setProfiles([...profiles]);
+
+      });
+      projects.addListener(() => {
+        setProjects([...projects]);
+      });
+      interests.addListener(() => {
+        setInterests([...interests]);
+      });
+    });
     // Return a cleanup function that closes the user realm.
     return () => {
       // cleanup function
@@ -84,6 +108,9 @@ const AuthProvider = ({ children }) => {
         signOut,
         getProfiles,
         user,
+        profiles,
+        projects,
+        interests
       }}
     >
       {children}

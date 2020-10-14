@@ -18,15 +18,11 @@ import {
 import { useAuth } from "../providers/AuthProvider";
 
 const ProfilesPage = ({navigation}) => {
-    const [profiles, setProfiles] = React.useState([]);
-    const { getProfiles } = useAuth();
+    const { profiles, projects, interests } = useAuth();
 
-    React.useEffect(() => {
-        const profilesData = getProfiles();
-        setProfiles(profilesData);
-    }, []);
-    console.log("profiles:");
-    console.log(profiles);
+    console.log("Profiles Page:");
+    console.log(projects);
+    
     return (
         <View style={{ flex: 6 }}>
             {/* <FlatList
@@ -37,6 +33,7 @@ const ProfilesPage = ({navigation}) => {
                 }}
                 keyExtractor={(item) => item.id}
                 /> */}
+            {profiles.map((item) => <Text>{item.firstName}</Text>)}
             <Text></Text>
             <Nav navigation={navigation}/>
         </View>
@@ -44,7 +41,7 @@ const ProfilesPage = ({navigation}) => {
 }
 
 const Profile = (props) => {
-    const { name, occupation, bio, pictureURL, interests, projects } = props.data;
+    const { firstName, lastName, bio, picture, title } = props.data;
     /* Take initials of Profile */
     const names = name.split(" ");
     let initials = "";
