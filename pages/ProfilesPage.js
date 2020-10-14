@@ -18,43 +18,35 @@ import {
 import { useAuth } from "../providers/AuthProvider";
 
 const ProfilesPage = ({navigation}) => {
-    const { profiles, projects, interests } = useAuth();
-
-    console.log("Profiles Page:");
-    console.log(projects);
+    const { profiles } = useAuth();
     
-    return (
+        return (
         <View style={{ flex: 6 }}>
-            {/* <FlatList
+            <FlatList
                 listKey="profiles"
-                data={DATA}
+                data={profiles}
                 renderItem={({ item }) => {
                     return (<Profile data={item} />);
                 }}
-                keyExtractor={(item) => item.id}
-                /> */}
-            {profiles.map((item) => <Text>{item.firstName}</Text>)}
-            <Text></Text>
-            <Nav navigation={navigation}/>
+                keyExtractor={(item) => item._id}
+                />
+            <Nav navigation={navigation}/> 
         </View>
     );
-}
+};
 
 const Profile = (props) => {
-    const { firstName, lastName, bio, picture, title } = props.data;
-    /* Take initials of Profile */
-    const names = name.split(" ");
-    let initials = "";
-    for (let i = 0; i < names.length; i++) {
-        const word = names[i];
-        initials += word[0];
-    }
-
+    const { _id, firstName, lastName, bio, picture, title } = props.data;
+    const initials = firstName[0] + lastName[0];
     const LeftContent = props => <Avatar.Text size={50} label={initials} />
+    const fullName = firstName + " " + lastName;
+
+    const interests = getInterests(_id);
+    const projects = getProjects(_id);
 
     return (
         <Card style={{ margin: 10 }}>
-            <Card.Title title={name} subtitle={occupation} left={LeftContent} />
+            <Card.Title title={fullName} subtitle={title} left={LeftContent} />
             <Card.Content style={{ marginBottom: 5 }}>
                 <Paragraph>{bio}</Paragraph>
             </Card.Content>
@@ -62,21 +54,54 @@ const Profile = (props) => {
                 <Card.Content style={{ flex: 1 }}>
                     <FlatList
                         style={{ flexDirection: 'row' }}
-                        listKey="interests"
+                        listKey={`interests:${_id}`}
                         data={interests}
-                        renderItem={({ item, index }) => <Chip style={{ marginRight: 10, backgroundColor: '#51b1a8' }}><Text style={{ color: 'white' }}>{item}</Text></Chip>} />
+                        renderItem={({ item, index }) => <Chip key={item.id} style={{ marginRight: 10, backgroundColor: '#51b1a8' }}><Text style={{ color: 'white' }}>{item.name}</Text></Chip>} />
                 </Card.Content>
-                <Card.Content style={{ flex: 1 }}>
-                    <Subheading>Projects</Subheading>
-                    <FlatList
-                        listKey="projects"
-                        data={projects}
-                        renderItem={({ item, index }) => <Paragraph>{item}</Paragraph>} />
-                </Card.Content>
+                {
+                    projects.length > 0
+                    ?
+                        <Card.Content style={{ flex: 1 }}>
+                        <Subheading>Projects</Subheading>
+                        <FlatList
+                            listKey={`projects:${_id}`}
+                            data={projects}
+                            renderItem={({ item, index }) => <Paragraph key={item.id}>{item.name}</Paragraph>} />
+                        </Card.Content>
+                    : null
+                }
             </View>
             <Divider style={{ marginTop: 10 }} />
         </Card>
     );
+}
+
+// Given a profile id, find all interests corresponding to that profile
+const getInterests = (profileId) => {
+    const { profileInterest } = useAuth();
+    let interests = [];
+    profileInterest
+        .filter((item) => {
+            return item.profileId === profileId;
+        })
+        .forEach(item => {
+            interests.push({name: item.interestName, id: `${item.profileId}${item.interestId}`});
+        });
+    return interests;
+};
+
+// Given a profile id, find all projects corresponding to that profile
+const getProjects = (profileId) => {
+    const { profileProject } = useAuth();
+    let projects = [];
+    profileProject
+        .filter((item) => {
+            return item.profileId === profileId;
+        })
+        .forEach(item => {
+            projects.push({name: item.projectName, id: `${item.profileId}${item.projectId}`});
+        });
+    return projects;
 }
 
 const Nav = ({navigation}) =>
@@ -114,91 +139,5 @@ const Nav = ({navigation}) =>
             <Button onPress={() => navigation.navigate('Settings')}>Settings</Button>
         </View>
     </View>;
-
-const DATA = [
-    {
-        id: '10',
-        name: 'Philip Johnson',
-        occupation: 'Professor',
-        bio: 'I am a Professor and like to paddle outrigger canoes.',
-        pictureURL: '../public/images/default_profile.jpg',
-        interests: [
-            'Software Engineering',
-            'Climate Change'
-        ],
-        projects: [
-            'RadGrad',
-            'Open Power Quality'
-        ]
-    },
-    {
-        id: '20',
-        name: 'Henri Casanova',
-        occupation: 'Professor',
-        bio: 'In my spare time, I like to scuba dive.',
-        pictureURL: 'https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
-        interests: [
-            'HPC',
-            'Distributed Computing'
-        ],
-        projects: [
-            'Wrench',
-        ]
-    },
-    {
-        id: '30',
-        name: 'Carleton Moore',
-        occupation: 'Assistant Professor',
-        bio: 'Every summer, I enjoy visiting Portland, Oregon.',
-        pictureURL: 'https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
-        interests: [
-            'Software Engineering',
-            'Renewable Energy'
-        ],
-        projects: [
-            'RadGrad',
-        ]
-    },
-    {
-        id: '40',
-        name: 'Anthony Christe',
-        occupation: 'Ph.D. Student',
-        bio: 'I enjoy competitive bicycle racing',
-        pictureURL: 'https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
-        interests: [
-            'AI',
-            'Distributed Computing'
-        ],
-        projects: [
-            'Open Power Quality',
-        ]
-    },
-    {
-        id: '50',
-        name: 'Jason Leigh',
-        occupation: 'Professor',
-        bio: 'I escaped from Chicago and moved to Hawaii in 2014.',
-        pictureURL: 'https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
-        interests: [
-            'Visualization',
-        ],
-        projects: [
-            'Cyber Canoe',
-        ]
-    },
-    {
-        id: '60',
-        name: 'Serge Negrashov',
-        occupation: 'Ph.D. Student',
-        bio: 'Most weekends, you can find me on my 8 foot dinghy.',
-        pictureURL: 'https://t4.ftcdn.net/jpg/00/64/67/63/240_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
-        interests: [
-            'Scalable IP Networks',
-        ],
-        projects: [
-            'Open Power Quality',
-        ]
-    },
-];
 
 export default ProfilesPage;

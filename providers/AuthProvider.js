@@ -18,13 +18,18 @@ const AuthProvider = ({ children }) => {
   const [profiles, setProfiles] = useState([]);
   const [projects, setProjects] = useState([]);
   const [interests, setInterests] = useState([]);
+
+  const [profileInterest, setProfileInterest] = useState([]);
+  const [profileProject, setProfileProject] = useState([]);
+  const [projectInterest, setProjectInterest] = useState([]);
+
   const realmRef = useRef(null);
 
   useEffect(() => {
     if (!user) {
       return;
     }
-    //console.log(Object.getOwnPropertyNames(user));
+
     const config = {
       sync: {
         user,
@@ -39,6 +44,10 @@ const AuthProvider = ({ children }) => {
       const projects = realm.objects("Project");
       const interests = realm.objects("Interest");
 
+      const profileInterest = realm.objects("ProfileInterest");
+      const profileProject = realm.objects("ProfileProject");
+      const projectInterest = realm.objects("ProjectInterest");
+
       profiles.addListener(() => {
         setProfiles([...profiles]);
 
@@ -49,7 +58,19 @@ const AuthProvider = ({ children }) => {
       interests.addListener(() => {
         setInterests([...interests]);
       });
+
+      profileInterest.addListener(() => {
+        setProfileInterest([...profileInterest]);
+
+      });
+      profileProject.addListener(() => {
+        setProfileProject([...profileProject]);
+      });
+      projectInterest.addListener(() => {
+        setProjectInterest([...projectInterest]);
+      });
     });
+
     // Return a cleanup function that closes the user realm.
     return () => {
       // cleanup function
@@ -110,7 +131,10 @@ const AuthProvider = ({ children }) => {
         user,
         profiles,
         projects,
-        interests
+        interests,
+        profileInterest, 
+        profileProject, 
+        projectInterest
       }}
     >
       {children}
