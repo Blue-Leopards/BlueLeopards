@@ -1,40 +1,48 @@
-import React from 'react';
-import { View } from 'react-native';
-
+import React, { useEffect, useState } from 'react';
+import { View, FlatList, ScrollView } from 'react-native';
 import {
     TextInput,
     Button,
-    Title
+    Title,
+    Chip,
+    Text,
 } from 'react-native-paper';
-
 import { useAuth } from "../providers/AuthProvider";
 
-
-const MyInput = (props) => {
-    const [text, setText] = React.useState('');
-
-    return (
-        <TextInput
-            label={props.category}
-            placeholder={props.placeholder}
-            value={text}
-            onChangeText={text => setText(text)}
-        />
-    );
+const buttonStyle = {
+  padding: 0, margin: 0
+};
+const buttonTextStyle = {
+    fontSize:10,
+    padding: 0, margin: 0
 };
 
 const AddProjectPage = () => {
     const { createProject } = useAuth();
-
+    const { interests } = useAuth();
     const [name, setName ] = React.useState("");
     const [description, setDescription ] = React.useState("");
     const [homePage, setHomePage ] = React.useState("");
     const [picture, setPicture ] = React.useState("");
 
-    return (
-        <View style={{padding:40}}>
-            <Title>Add A Project</Title>
+    const [selectedInterests, setSelectedInterests] = useState([]);
+    const [interestChips, setInterestChips] = useState([]);
+    
+    useEffect(() => {
+        let startingInterests = [];
+        interests.forEach(interest => {
+            startingInterests.push({
+                interestId: interest._id,
+                interestName: interest.name,
+                selected: false
+            });
+        });
+        setInterestChips([...startingInterests]);
+    }, []);
 
+    console.log(interestChips);
+    return (
+        <ScrollView style={{padding:10, flex:1}}>
             <TextInput
                 label="Name"
                 value={name}
@@ -55,16 +63,31 @@ const AddProjectPage = () => {
                 value={picture}
                 onChangeText={text => setPicture(text)}
             />
-            <MyInput category="Interests"/>
-            <MyInput category="Contributors"/>
+                <FlatList
+                    listKey="interests"
+                    data={interestChips}
+                    renderItem={({ item }) => {
+                        return (
+                            <Button 
+                                compact={true} 
+                                style={buttonStyle}
+                                labelStyle={buttonTextStyle}>
+                                {item.interestName}
+                            </Button>
+                        );
+                    }}
+                    keyExtractor={(item) => item.interestId}
+                    />
 
             <Button
                 mode="contained" 
-                onPress={()=> {createProject()}}
+                onPress={() => {createProject()}}
                 style={{marginTop:10}}>
                 Create
             </Button>
-        </View>
+
+
+        </ScrollView>
     );
 }
 
