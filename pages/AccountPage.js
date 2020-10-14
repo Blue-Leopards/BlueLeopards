@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { TextInput, Button, Title } from 'react-native-paper';
 import { useAuth } from "../providers/AuthProvider";
+import { useNavigation } from "@react-navigation/native";
 
 
 const MyInput = ({category, value, onChangeHandler}) => {
@@ -17,14 +18,24 @@ const MyInput = ({category, value, onChangeHandler}) => {
 };
 
 const AccountPage = () => {
-    const { user } = useAuth();
-    // console.log(Object.getOwnPropertyNames(user.));
-    // console.log(user.customData);
-    const {_id, email, firstName, lastName, bio, title, picture} = user.customData;
+    const { user, updateUser, profiles } = useAuth();
+    const navigation = useNavigation();
+
+    // Find User's Profile
+    const userProfile = profiles.filter(profile => {
+        return profile._id === user.customData._id;
+    })[0];
+
+    console.log("user profile");
+    console.log(userProfile);
+
+    const {_id, email, firstName, lastName, bio, title, picture} = userProfile;
     
     const [ userData, setUserData ] = useState({
         _id, email, firstName, lastName, bio, title, picture
     });
+
+    console.log("user data");
     console.log(userData);
     return (
         <View style={{padding:40}}>
@@ -64,7 +75,18 @@ const AccountPage = () => {
             <MyInput category="Projects"/>
             <Button
                 mode="contained" 
-                onPress={()=>console.log("Pressed Update Account Button!")}
+                onPress={()=> {
+                    updateUser({
+                    "_id": userData._id,
+                    "email":userData.email,
+                    "firstName":userData.firstName,
+                    "lastName": userData.lastName,
+                    "bio": userData.bio,
+                    "title": userData.title,
+                    "picture": userData.picture
+                    });
+                    navigation.navigate("Profiles");
+                }}
                 style={{marginTop:10}}>
                 Update
             </Button>

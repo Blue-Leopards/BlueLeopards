@@ -135,7 +135,7 @@ const AuthProvider = ({ children }) => {
     console.log(newObject);
 
 
-    
+
     // realm.write(() => {
 
     // realm.create(
@@ -143,6 +143,15 @@ const AuthProvider = ({ children }) => {
     //     new
     //   );
     // });
+  };
+
+  const updateUser = async userData => {
+    try {
+      console.log("Updating user...");
+      await user.functions.updateProfileDocument(userData);
+    } catch (err) {
+      Alert.alert("An error occurred while updating account", err);
+    }
   };
 
   return (
@@ -153,6 +162,7 @@ const AuthProvider = ({ children }) => {
         signOut,
         getProfiles,
         createProject,
+        updateUser,
         user,
         profiles,
         projects,
