@@ -4,22 +4,27 @@ import { View, FlatList } from 'react-native';
 
 import {
     Avatar, 
+    Text,
     Card, 
     Title, 
     Divider, 
     Subheading, 
     Button } from 'react-native-paper';
 
+import { useAuth } from "../providers/AuthProvider";
+
 const InterestsPage = ({ navigation }) => {
+    const { interests } = useAuth();
+
     return (
         <View style={{flex: 6}}>
             <FlatList
                 listKey="interests"
-                data={DATA}
+                data={interests}
                 renderItem={({item}) => {
                     return (<Interest data={item}/>);
                 }}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item._id}
                 />
             <Nav navigation={navigation}/>
         </View>
@@ -27,36 +32,10 @@ const InterestsPage = ({ navigation }) => {
 };
 
 const Interest = (props) => {
-    const { name, contributors, projects } = props.data;
+    const { _id, name } = props.data;
 
-    let contributorNames = [];
-    let projectNames = [];
-
-    /* Take initials of contributors */
-    for (let i = 0; i < contributors.length; i++) {
-
-        let contributorInitials = "";
-        let contributorName = contributors[i].split(" ");
-
-        for (let j = 0; j < contributorName.length; j++) {
-            const word = contributorName[j];
-            contributorInitials += word[0];    // Take initial
-        }
-        contributorNames.push(contributorInitials);
-    }
-
-    /* Take initials of projects */
-    for (let i = 0; i < projects.length; i++) {
-
-        let projectInitials = "";
-        let projectName = projects[i].split(" ");
-
-        for (let j = 0; j < projectName.length; j++) {
-            const word = projectName[j];
-            projectInitials += word[0];    // Take initial
-        }
-        projectNames.push(projectInitials);
-    }
+    const profiles = getProfiles(_id);
+    let projects = getProjects(_id);
 
     return (
         <Card style={{ margin: 10, padding: 10 }}>
@@ -65,23 +44,84 @@ const Interest = (props) => {
             <Card.Content style={{marginTop: 10, flex:1, flexDirection:'row'}}>
                 <FlatList
                     style={{ flex: 1, flexDirection: 'row' }}
-                    listKey="contributors"
-                    data={contributorNames}
-                    renderItem={({ item, index }) =>
-                        <Avatar.Text style={{ flex: 1, marginRight: 15 }} size={50} label={item} />} />
+                    listKey={`profiles:${_id}`}
+                    data={profiles}
+                    renderItem={({ item, index }) => {
+                        // <Text key={item.id}>{reduceToInitials(item.name)}</Text>
+                        return <Avatar.Text style={{ flex: 1, marginRight: 15 }} size={50} key={item.id} label={reduceToInitials(item.name)} />
+                    }}/>
                 <View style={{flex: 1}}>
                     <Subheading>Projects</Subheading>
                     <FlatList
                         style={{ flex: 1, flexDirection: 'row' }}
-                        listKey="projects"
-                        data={projectNames}
+                        listKey={`projects:${_id}`}
+                        data={projects}
                         renderItem={({ item, index }) =>
-                            <Avatar.Text style={{ flex: 1, backgroundColor: '#51b1a8' }} size={50} label={item} />} />
+                            <Avatar.Text style={{ flex: 1, backgroundColor: '#51b1a8' }} size={50} key={item.id} label={reduceToInitials(item.name)} />} />
                 </View>
             </Card.Content>
         </Card>
     );
 }
+
+const reduceToInitials = (name) => {
+    let initials = "";
+    let names = name.split(" ");
+    if(names.length > 0) {
+        names.forEach(name => {
+            initials += name[0];
+        })
+    }
+    return initials;
+};
+
+const getProfiles = (interestId) => {
+    const { profileInterest } = useAuth();
+
+    let profileIds = [];
+    let profileObjects = [];
+
+    // First get all profile Ids
+    profileInterest
+        .filter(item => item.interestId === interestId)
+        .forEach(item => {
+            profileIds.push(item.profileId)
+        });
+    // Loop through profiles collection and get all names
+    profileIds
+        .forEach(id => {
+            const profile = getProfileData(id);
+            profileObjects.push({
+                name: profile.name,
+                id: `${interestId}${profile.id}`
+            });
+        });
+
+    return profileObjects;
+};
+
+const getProfileData = (profileId) => {
+    const { profiles } = useAuth();
+    const profile = profiles.filter(item => item._id === profileId);
+    let name;
+    if (profile.length === 1) {
+        name = profile[0].firstName + " " + profile[0].lastName;
+    }
+    return { name, id: `${profile[0]._id}`};
+};
+
+const getProjects = (interestId) => {
+    const { projectInterest } = useAuth();
+    let projects = [];
+    projectInterest
+        .filter(item => {
+            return item.interestId === interestId;
+        })
+        .forEach(item => {
+            projects.push({name: item.projectName, id: `${item.interestId}${item.projectId}`});
+        });
+    return projects;
+};
 
 const Nav = ({ navigation }) =>
     <View style={{
@@ -115,107 +155,8 @@ const Nav = ({ navigation }) =>
             justifyContent: 'center',
             alignItems: 'center'
         }}>
-            <Button>Settings</Button>
+            <Button onPress={() => navigation.navigate('Settings')}>Settings</Button>
         </View>
     </View>;
-
-const DATA = [
-    {
-        id:'10',
-        name: 'Software Engineering',
-        contributors: [
-            'Philip Johnson',
-            'Carleton Moore'
-        ],
-        projects: [
-            'Open Power Quality',
-        ]
-    },
-    {
-        id:'20',
-        name: 'Climate Change',
-        contributors: [
-            'Philip Johnson',
-        ],
-        projects: []
-    },
-    {
-        id:'30',
-        name: 'HPC',
-        contributors: [
-            'Henri Casanova',
-        ],
-        projects: []
-    },
-    {
-        id:'40',
-        name: 'Distributed Computing',
-        contributors: [
-            'Henri Casanova',
-            'Anthony Christe'
-        ],
-        projects: []
-    },
-    {
-        id:'50',
-        name: 'Renewable Energy',
-        contributors: [
-            'Carleton Moore',
-        ],
-        projects: [
-            'Open Power Quality',
-        ]
-    },
-    {
-        id:'60',
-        name: 'AI',
-        contributors: [
-            'Anthony Christe',
-        ],
-        projects: []
-    },
-    {
-        id:'70',
-        name: 'Visualization',
-        contributors: [
-            'Jason Leigh',
-        ],
-        projects: [
-            'Cyber Canoe',
-        ]
-    },
-    {
-        id:'80',
-        name: 'Scalable IP Networks',
-        contributors: [
-            'Serge Negrashov',
-        ],
-        projects: []
-    },
-    {
-        id:'90',
-        name: 'Educational Technology',
-        contributors: [],
-        projects: [
-            'RadGrad',
-        ]
-    },
-    {
-        id:'100',
-        name: 'Distributed computing',
-        contributors: [],
-        projects: [
-            'WRENCH',
-        ]
-    },
-    {
-        id:'110',
-        name: 'Unity',
-        contributors: [],
-        projects: [
-            'Cyber Canoe',
-        ]
-    },
-]
 
 export default InterestsPage;

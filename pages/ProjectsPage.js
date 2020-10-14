@@ -121,6 +121,7 @@ const getProfileData = (profileId) => {
     }
     return { name, id: `${profile[0]._id}`};
 };
+
 const Nav = ({ navigation}) =>
     <View style={{
         height: 75,
