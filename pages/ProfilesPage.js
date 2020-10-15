@@ -18,7 +18,7 @@ import {
 import { useAuth } from "../providers/AuthProvider";
 import NavigationBar from "../pages/NavigationBar";
 
-const ProfilesPage = ({navigation}) => {
+const ProfilesPage = () => {
     const { profiles } = useAuth();
         return (
         <View style={{ flex: 6 }}>
@@ -31,7 +31,6 @@ const ProfilesPage = ({navigation}) => {
                 keyExtractor={(item) => item._id}
                 />
             <NavigationBar/>
-            {/* <Nav navigation={navigation}/>  */}
         </View>
     );
 };

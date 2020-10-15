@@ -2,9 +2,11 @@ import React from 'react';
 import { View } from 'react-native';
 import { Button, Text, IconButton } from 'react-native-paper';
 import { useNavigation } from "@react-navigation/native";
+import {useRoute} from '@react-navigation/native';
 
 const NavigationBar = () => {
   const navigation = useNavigation();
+  const route = useRoute();
 
   return (
     <View style={{
@@ -16,32 +18,28 @@ const NavigationBar = () => {
     }}>
       <IconButton
         style={styles.buttonStyle}
-        icon="account-group"
+        icon={`account-group${route.name !== "Profiles" ? "-outline" : ""}`}
         size={styles.buttonSize}
-        onPress={() => navigation.navigate('Profiles')}
+        onPress={() => {navigation.navigate('Profiles')}}
       />
       <IconButton
         style={styles.buttonStyle}
-        icon="file-account"
+        icon={`file-account${route.name !== "Projects" ? "-outline" : ""}`}
         size={styles.buttonSize}
         onPress={() => navigation.navigate('Projects')}
       />
       <IconButton
         style={styles.buttonStyle}
-        icon="lightbulb-on"
+        icon={`lightbulb-on${route.name !== "Interests" ? "-outline" : ""}`}
         size={styles.buttonSize}
         onPress={() => navigation.navigate('Interests')}
       />
       <IconButton
         style={styles.buttonStyle}
-        icon="cog-outline"
+        icon={`cog${route.name !== "Settings" ? "-outline" : ""}`}
         size={styles.buttonSize}
         onPress={() => navigation.navigate('Settings')}
       />
-      {/* <Button mode="text" labelStyle={styles.buttonLabelStyle} style={styles.buttonStyle} icon="account-group"  onPress={() => navigation.navigate('Profiles')}/>
-      <Button mode="contained" labelStyle={styles.buttonLabelStyle} style={styles.buttonStyle} icon="file-account" onPress={() => navigation.navigate('Projects')}/>
-      <Button mode="text" labelStyle={styles.buttonLabelStyle} style={styles.buttonStyle} icon="lightbulb-on" onPress={() => navigation.navigate('Interests')}/>
-      <Button mode="contained" labelStyle={styles.buttonLabelStyle} style={styles.buttonStyle} icon="cog-outline" onPress={() => navigation.navigate('Settings')}/> */}
     </View>
   );
 };
@@ -55,6 +53,7 @@ const styles = {
     margin:0,
   },
   buttonSize: 30,
+  highlightedButtonSize:35,
   buttonLabelStyle: {
   }
 };
