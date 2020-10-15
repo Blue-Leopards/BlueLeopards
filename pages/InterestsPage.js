@@ -1,17 +1,10 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import {
-    Avatar, 
-    Text,
-    Card, 
-    Title, 
-    Divider, 
-    Subheading, 
-    Button } from 'react-native-paper';
+import { Text, Card, Title, Divider, Button, Chip } from 'react-native-paper';
 import { useAuth } from "../providers/AuthProvider";
 import NavigationBar from "../pages/NavigationBar";
 
-const InterestsPage = ({ navigation }) => {
+const InterestsPage = () => {
     const { interests } = useAuth();
 
     return (
@@ -31,31 +24,28 @@ const InterestsPage = ({ navigation }) => {
 
 const Interest = (props) => {
     const { _id, name } = props.data;
-
     const profiles = getProfiles(_id);
     let projects = getProjects(_id);
 
     return (
-        <Card style={{ margin: 10, padding: 10 }}>
+        <Card style={{ margin: 10, padding: 10,  }}>
             <Title>{name}</Title>
             <Divider style={{ margin: 10 }} />
-            <Card.Content style={{marginTop: 10, flex:1, flexDirection:'row'}}>
+            <Card.Content style={{marginTop: 10, flex:1, flexDirection:'column', }}>
                 <FlatList
-                    style={{ flex: 1, flexDirection: 'row' }}
+                    style={{ flex: 1, flexWrap: 'wrap', flexDirection: 'row', alignItems:'space-between' }}
                     listKey={`profiles:${_id}`}
                     data={profiles}
-                    renderItem={({ item, index }) => {
-                        // <Text key={item.id}>{reduceToInitials(item.name)}</Text>
-                        return <Avatar.Text style={{ flex: 1, marginRight: 15 }} size={50} key={item.id} label={reduceToInitials(item.name)} />
+                    renderItem={({ item }) => {
+                        return <Chip key={item.id} style={{ backgroundColor: '#8bb9b9' }}><Text style={{ color: 'white' }}>{item.name}</Text></Chip>
                     }}/>
                 <View style={{flex: 1}}>
-                    <Subheading>Projects</Subheading>
                     <FlatList
-                        style={{ flex: 1, flexDirection: 'row' }}
+                        style={{ flex: 1, flexDirection: 'row', flexWrap:'wrap' }}
                         listKey={`projects:${_id}`}
                         data={projects}
-                        renderItem={({ item, index }) =>
-                            <Avatar.Text style={{ flex: 1, backgroundColor: '#51b1a8' }} size={50} key={item.id} label={reduceToInitials(item.name)} />} />
+                        renderItem={({ item }) =>
+                        <Chip key={item.id} style={{ backgroundColor: '#284e57' }}><Text style={{ color: 'white' }}>{item.name}</Text></Chip>}/>
                 </View>
             </Card.Content>
         </Card>
@@ -120,41 +110,5 @@ const getProjects = (interestId) => {
         });
     return projects;
 };
-
-const Nav = ({ navigation }) =>
-    <View style={{
-        height: 75,
-        backgroundColor: 'lightgrey',
-        flexDirection: 'row'
-    }}>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Profiles')}>Profiles</Button>
-        </View>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Projects')}>Projects</Button>
-        </View>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Interests')}>Interests</Button>
-        </View>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Settings')}>Settings</Button>
-        </View>
-    </View>;
 
 export default InterestsPage;
