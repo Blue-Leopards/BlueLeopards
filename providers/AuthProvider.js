@@ -4,6 +4,7 @@ import { getRealmApp } from "../getRealmApp";
 import { Alert } from "react-native";
 import { Project } from "../schemas/Project";
 import { ProfileInterest } from "../schemas/ProfileInterest";
+import { ProfileProject } from "../schemas/ProfileProject";
 
 // Access the Realm App.
 const app = getRealmApp();

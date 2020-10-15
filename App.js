@@ -41,7 +41,8 @@ const App = () => {
           {/* <AddProjectPage/> */}
           {/* <FilterPage/> */}
         <View style={{flex:1, backgroundColor: "#eae9ef"}}>
-          <Stack.Navigator>
+        {/* <Stack.Navigator headerMode="none" screenOptions={{ animationEnabled: false }}> */}
+        <Stack.Navigator screenOptions={{ animationEnabled: false }}>
             <Stack.Screen
               name="Welcome"
               component={WelcomeView}

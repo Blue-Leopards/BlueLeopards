@@ -16,10 +16,10 @@ import {
 } from 'react-native-paper';
 
 import { useAuth } from "../providers/AuthProvider";
+import NavigationBar from "../pages/NavigationBar";
 
 const ProfilesPage = ({navigation}) => {
     const { profiles } = useAuth();
-    
         return (
         <View style={{ flex: 6 }}>
             <FlatList
@@ -30,7 +30,8 @@ const ProfilesPage = ({navigation}) => {
                 }}
                 keyExtractor={(item) => item._id}
                 />
-            <Nav navigation={navigation}/> 
+            <NavigationBar/>
+            {/* <Nav navigation={navigation}/>  */}
         </View>
     );
 };

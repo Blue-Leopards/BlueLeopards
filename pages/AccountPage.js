@@ -7,14 +7,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Modal, Portal, Provider } from 'react-native-paper';
 
 const AccountPage = () => {
-    const { user, updateUser, profiles, interests, profileInterest, profileProject, addProfileInterest } = useAuth();
+    const { user, updateUser, profiles, interests, projects, profileInterest, profileProject, addProfileInterest, addProfileProject } = useAuth();
     const navigation = useNavigation();
 
     const [interestVisible, setInterestVisible] = React.useState(false);
     const [projectVisible, setProjectVisible] = React.useState(false);
-
-    const showModal = () => setVisible(true);
-    const hideModal = () => setVisible(false);
 
     // Find User's Profile
     const userProfile = profiles.filter(profile => {
@@ -31,7 +28,7 @@ const AccountPage = () => {
 
     // Find interests that user does not have
     const nonInterests = getNonInterests(interests, userInterests);
-
+    const nonProjects = getNonProjects(projects, userProjects);
     // Find User's updated Account Data
     const {_id, email, firstName, lastName, bio, title, picture} = userProfile;
     
@@ -140,7 +137,24 @@ const AccountPage = () => {
                     </Modal>
                     <Modal visible={projectVisible} onDismiss={() => setProjectVisible(false)}>
                         <View style={{backgroundColor: 'white', height:'80%', width:'100%'}}>
-                        <Text>Projects Modal</Text>  
+                        <Subheading>Add Projects!</Subheading>
+                        <FlatList
+                            listKey={`nonProjects:${_id}`}
+                            data={nonProjects}
+                            renderItem={({ item }) => {
+                            return (
+                                    <Button key={item._id} onPress={() => {
+                                        console.log(`Adding Project: ${item.name} To: ${user.customData.email}`);
+                                        addProfileProject({
+                                            profileId: _id,
+                                            profileEmail: email,
+                                            projectId: item._id,
+                                            projectName: item.name
+                                        })
+                                    }}>{item.name}</Button>
+                            );}}
+                            keyExtractor={(item) => item._id}
+                         />
                         </View>
                     </Modal>
                 </Portal>
@@ -170,6 +184,29 @@ const getNonInterests = (interestCollection, userInterests) => {
         return isNotInterest;
     });
     return nonInterests;
+};
+
+// Given the project collection and a user's projects, return the interests
+// that user does not have.
+const getNonProjects = (projectCollection, userProjects) => {
+    let nonProjects;
+    let projectsIds = [];
+
+    userProjects.forEach(project => {
+        projectsIds.push(project.projectId);
+    });
+
+    nonProjects = projectCollection.filter(project => {
+        let isNotProject = true;
+        
+        projectsIds.forEach(id => {
+            if(project._id === id) {
+                isNotProject = false;
+            }
+        });
+        return isNotProject;
+    });
+    return nonProjects;
 };
 
 const Interests = ({title, id, data}) => {

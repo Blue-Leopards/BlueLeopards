@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { View, FlatList } from 'react-native';
-
 import {
     Avatar, 
     Text,
@@ -10,8 +8,8 @@ import {
     Divider, 
     Subheading, 
     Button } from 'react-native-paper';
-
 import { useAuth } from "../providers/AuthProvider";
+import NavigationBar from "../pages/NavigationBar";
 
 const InterestsPage = ({ navigation }) => {
     const { interests } = useAuth();
@@ -26,7 +24,7 @@ const InterestsPage = ({ navigation }) => {
                 }}
                 keyExtractor={(item) => item._id}
                 />
-            <Nav navigation={navigation}/>
+            <NavigationBar/>
         </View>
     );
 };
