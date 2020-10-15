@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { TextInput, Button, Title, Text, Subheading } from 'react-native-paper';
+import { TextInput, Button, Text, Subheading, Card, IconButton, Paragraph, Modal, Portal, Provider } from 'react-native-paper';
 import { useAuth } from "../providers/AuthProvider";
 import { useNavigation } from "@react-navigation/native";
-
-import { Modal, Portal, Provider } from 'react-native-paper';
 
 const AccountPage = () => {
     const { user, updateUser, profiles, interests, projects, profileInterest, profileProject, addProfileInterest, addProfileProject } = useAuth();
@@ -70,9 +68,90 @@ const AccountPage = () => {
                 value={userData.picture}
                 onChangeText={text => setUserData({...userData, picture: text})}
                 />
-            { interestVisible || projectVisible
-                ? null
-                :
+
+            <View style={{
+                flexDirection: 'row',
+            }}>
+            <Interests title="Interests" data={userInterests} id={_id} />
+            <Projects title="Projects" data={userProjects} id={_id} />
+            </View>
+            <Provider>
+                <Portal>
+                    <Modal visible={interestVisible} onDismiss={() => setInterestVisible(false)}>
+                    <Card style={{padding:20, marginBottom: 60, marginLeft: 10, marginRight: 10}}>
+                            <Card.Title title="Add Interests" />
+                            <Card.Content>
+                            <FlatList
+                                listKey={`nonInterests:${_id}`}
+                                data={nonInterests}
+                                renderItem={({ item }) => {
+                                return (
+                                    <View style={{flex:1, flexDirection:'row'}}>
+                                    <IconButton size={12} icon="plus-circle" onPress={() => {
+                                            console.log(`Adding Interest: ${item.name} To: ${user.customData.email}`);
+                                            addProfileInterest({
+                                                profileId: _id,
+                                                profileEmail: email,
+                                                interestId: item._id,
+                                                interestName: item.name
+                                            })
+                                        }}/>
+                                    <Paragraph>{item.name}</Paragraph>
+                                    </View>
+
+                                );}}
+                                keyExtractor={(item) => item._id}
+                            />                            
+                            </Card.Content>
+                            <Card.Actions>
+                                <Button onPress={() => setInterestVisible(false)}>Done</Button>
+                            </Card.Actions>
+                        </Card>
+                    </Modal>
+                    <Modal visible={projectVisible} onDismiss={() => setProjectVisible(false)}>
+                    <Card style={{padding:20, marginBottom: 60, marginLeft: 10, marginRight: 10}}>
+                            <Card.Title title="Add Contributions" />
+                            <Card.Content>
+                            <FlatList
+                                listKey={`addProjects:${_id}`}
+                                data={nonProjects}
+                                renderItem={({ item }) => {
+                                return (
+                                    <View style={{flex:1, flexDirection:'row'}}>
+                                    <IconButton size={12} icon="plus-circle" onPress={() => {
+                                            console.log(`Adding Project: ${item.name} To: ${user.customData.email}`);
+                                            addProfileProject({
+                                                profileId: _id,
+                                                profileEmail: email,
+                                                projectId: item._id,
+                                                projectName: item.name
+                                            });
+                                        }}/>
+                                    <Paragraph>{item.name}</Paragraph>
+                                    </View>
+
+                                );}}
+                                keyExtractor={(item) => item._id}
+                            />                            
+                            </Card.Content>
+                            <Card.Actions>
+                                <Button onPress={() => setProjectVisible(false)}>Done</Button>
+                            </Card.Actions>
+                        </Card>
+                    </Modal>
+                </Portal>
+            </Provider>
+
+            <View style={{ flex: 1, justifyContent: 'flex-end'}}>
+
+            <View style={{ flexDirection: 'row', marginTop:10 }}>
+                <Button labelStyle={{color:"white"}} color="#51b1a8" mode="contained" compact={true} style={{flex:1}} onPress={() => setInterestVisible(true)}>
+                    Add Interest
+                </Button>
+                <Button labelStyle={{color:"white"}} color="#51b1a8" mode="contained" compact={true} style={{flex:1}} onPress={()=> setProjectVisible(true)}>
+                    Add Project
+                </Button>
+            </View>
                 <Button
                 mode="contained" 
                 onPress={()=> {
@@ -86,79 +165,12 @@ const AccountPage = () => {
                     "picture": userData.picture
                     });
                     navigation.navigate("Profiles");
-                }}
-                style={{marginTop:10}}>
+                    }}
+                    style={{marginTop:10}}>
                 Update
-            </Button>
-            }
-
-            <View style={{
-                flexDirection: 'row',
-                borderWidth:1,
-                marginTop:10,
-            }}>
-                <Button labelStyle={{color:"white"}} color="#51b1a8" mode="contained" compact={true} style={{flex:1}} onPress={() => setInterestVisible(true)}>
-                    Add Interest
                 </Button>
-                <Button labelStyle={{color:"white"}} color="#51b1a8" mode="contained" compact={true} style={{flex:1}} onPress={()=> setProjectVisible(true)}>
-                    Add Project
-                </Button>
+            
             </View>
-
-            <View style={{
-                flexDirection: 'row',
-            }}>
-            <Interests title="Interests" data={userInterests} id={_id} />
-            <Projects title="Projects" data={userProjects} id={_id} />
-            </View>
-            <Provider>
-                <Portal>
-                    <Modal visible={interestVisible} onDismiss={() => setInterestVisible(false)}>
-                        <View style={{backgroundColor: 'white', height:'80%', width:'100%'}}>
-                        <Subheading>Add Interests!</Subheading>
-                        <FlatList
-                            listKey={`nonInterests:${_id}`}
-                            data={nonInterests}
-                            renderItem={({ item }) => {
-                            return (
-                                    <Button key={item._id} onPress={() => {
-                                        console.log(`Adding Interest: ${item.name} To: ${user.customData.email}`);
-                                        addProfileInterest({
-                                            profileId: _id,
-                                            profileEmail: email,
-                                            interestId: item._id,
-                                            interestName: item.name
-                                        })
-                                    }}>{item.name}</Button>
-                            );}}
-                            keyExtractor={(item) => item._id}
-                         />
-                        </View>
-                    </Modal>
-                    <Modal visible={projectVisible} onDismiss={() => setProjectVisible(false)}>
-                        <View style={{backgroundColor: 'white', height:'80%', width:'100%'}}>
-                        <Subheading>Add Projects!</Subheading>
-                        <FlatList
-                            listKey={`nonProjects:${_id}`}
-                            data={nonProjects}
-                            renderItem={({ item }) => {
-                            return (
-                                    <Button key={item._id} onPress={() => {
-                                        console.log(`Adding Project: ${item.name} To: ${user.customData.email}`);
-                                        addProfileProject({
-                                            profileId: _id,
-                                            profileEmail: email,
-                                            projectId: item._id,
-                                            projectName: item.name
-                                        })
-                                    }}>{item.name}</Button>
-                            );}}
-                            keyExtractor={(item) => item._id}
-                         />
-                        </View>
-                    </Modal>
-                </Portal>
-            </Provider>
         </View>
     );
 };
@@ -215,14 +227,14 @@ const Interests = ({title, id, data}) => {
         componentToRender = null;
     } else {
         componentToRender = (
-            <View style={{ borderWidth: 1, flex:1, height:100 }}>
+            <View style={{ flex:1, height:100 }}>
                 <Subheading>{title}</Subheading>
                 <FlatList
                     listKey={`interests:${id}`}
                     data={data}
                     renderItem={({ item }) => {
                         return (
-                            <View key={item._id} style={{ borderWidth: 1, flex: 1, padding:5 }}>
+                            <View key={item._id} style={{ flex: 1, padding:5 }}>
                                 <Text >{item.interestName}</Text>
                             </View>
                         );}}
@@ -239,14 +251,14 @@ const Projects = ({title, id, data}) => {
         componentToRender = null;
     } else {
         componentToRender = (
-            <View style={{borderWidth:1, flex:1, height:100}}>
+            <View style={{ flex:1, height:100}}>
                 <Subheading>{title}</Subheading>
                 <FlatList
                     listKey={`projects:${id}`}
                     data={data}
                     renderItem={({ item }) => {
                         return (
-                            <View key={item._id} style={{ borderWidth: 1, flex: 1, padding:5 }}>
+                            <View key={item._id} style={{ flex: 1, padding:5 }}>
                                 <Text >{item.projectName}</Text>
                             </View>
                         );}}
