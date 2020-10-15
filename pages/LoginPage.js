@@ -44,13 +44,14 @@ const LoginPage = () => {
             secureTextEntry
             />
             <Button
+                color="#284e57"
                 mode="contained" 
                 onPress={onPressSignIn}
                 style={{marginTop:10}}>
                 Log In
             </Button>
 
-            <Button onPress={() => navigation.navigate("SignUp")}>sign up</Button>
+            <Button color="#284e57" onPress={() => navigation.navigate("SignUp")}>sign up</Button>
         </View>
     );
 }
