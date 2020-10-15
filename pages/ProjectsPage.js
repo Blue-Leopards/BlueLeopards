@@ -32,8 +32,10 @@ const Project = (props) => {
         const word = names[i];
         initials += word[0];
     }
-
-    const LeftContent = props => <Avatar.Text size={50} label={initials} />
+    if(initials.length > 2) {
+        initials = initials[0] + initials[1];
+    }
+    const LeftContent = props => <Avatar.Text style={{backgroundColor:'#69604d'}} size={50} label={initials} />
     const interests = getInterests(_id);
     const profiles = getProfiles(_id);
 
@@ -50,7 +52,7 @@ const Project = (props) => {
                         style={{ flexDirection: 'row-reverse', flexWrap: 'wrap', alignContent: 'center', }}
                         listKey={`interests:${_id}`}
                         data={interests}
-                        renderItem={({ item, index }) => <Chip key={item.id} style={{ backgroundColor: '#51b1a8' }}><Text style={{ color: 'white' }}>{item.name}</Text></Chip>} />
+                        renderItem={({ item, index }) => <Chip key={item.id} style={{ backgroundColor: '#8bb9b9' }}><Text style={{ color: 'white' }}>{item.name}</Text></Chip>} />
                 </Card.Content>
                 <Card.Content style={{ flex: 1 }}>
                     <Subheading>Contributors</Subheading>
