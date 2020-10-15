@@ -5,6 +5,7 @@ import { Alert } from "react-native";
 import { Project } from "../schemas/Project";
 import { ProfileInterest } from "../schemas/ProfileInterest";
 import { ProfileProject } from "../schemas/ProfileProject";
+import { ProjectInterest } from "../schemas/ProjectInterest";
 
 // Access the Realm App.
 const app = getRealmApp();
@@ -124,25 +125,50 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const createProject = data => {
-    // const realm = realmRef.current;
-
-    const newObject = new Project({
-      name: "Test Project 2",
+  const createProject = (projectData, profiles, interests) => {
+    const realm = realmRef.current;
+  
+    // Create New Project
+    const newProject = new Project({
+      name: projectData.name,
       partition: "public",
-      homePage: "",
-      picture: "",
-      description: "A test."
+      homePage: projectData.homePage,
+      picture: projectData.picture,
+      description: projectData.description
     });
-    console.log(newObject);
+    
+    // For each profile, create new ProfileProject
+    if(profiles.length > 0) {
+      profiles.forEach((profile) => {
+        addProfileProject({
+          profileId: profile._id,
+          profileEmail: profile._email,
+          projectId: newProject._id,
+          projectName: newProject.name
+        });
+      });
+    }
 
-    // realm.write(() => {
+    // For each interest, create new ProjectInterest
+    if(interests.length > 0) {
+      interests.forEach((interest) => {
+        addProjectInterest({
+          projectId: newProject._id,
+          projectName: newProject.name,
+          interestId: interest._id,
+          interestName: interest.name 
+        });
+      })
+    }
 
-    // realm.create(
-    //     "Project",
-    //     new
-    //   );
-    // });
+    // Insert new project into collection
+    realm.write(() => {
+      console.log(`Creating Project Doc id:${newProject._id}`)
+      realm.create(
+        "Project",
+        newProject
+      );
+    });
   };
 
   const updateUser = async userData => {
@@ -153,6 +179,7 @@ const AuthProvider = ({ children }) => {
       Alert.alert("An error occurred while updating account", err);
     }
   };
+
   const addProfileInterest = data => {
     const realm = realmRef.current;
 
@@ -169,7 +196,7 @@ const AuthProvider = ({ children }) => {
         newProfileInterest
       );
     });
-  }
+  };
 
   const addProfileProject = data => {
     const realm = realmRef.current;
@@ -180,12 +207,30 @@ const AuthProvider = ({ children }) => {
       projectName: data.projectName
     });
     realm.write(() => {
+      console.log(`Creating ProfileProject Doc id:${newProfileProject._id}`)
       realm.create(
         "ProfileProject",
         newProfileProject
       );
     });
   }
+
+  const addProjectInterest = data => {
+    const realm = realmRef.current;
+    const newProjectInterest = new ProjectInterest({
+      interestId: data.interestId,
+      interestName: data.interestName,
+      projectId: data.projectId,
+      projectName: data.projectName
+    });
+    realm.write(() => {
+      console.log(`Creating ProjectInterest Doc id:${newProjectInterest._id}`)
+      realm.create(
+        "ProjectInterest",
+        newProjectInterest
+      );
+    });
+  };
 
   return (
     <AuthContext.Provider

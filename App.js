@@ -58,6 +58,7 @@ const App = () => {
             <Stack.Screen
               name="AddProject"
               component={AddProjectPage}
+              options={{ title: "Create a Project" }}
               />
             <Stack.Screen
               name="Filter"
