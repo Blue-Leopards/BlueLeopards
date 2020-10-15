@@ -104,7 +104,7 @@ const AccountPage = () => {
                             />                            
                             </Card.Content>
                             <Card.Actions>
-                                <Button onPress={() => setInterestVisible(false)}>Done</Button>
+                                <Button color="#284e57" onPress={() => setInterestVisible(false)}>Done</Button>
                             </Card.Actions>
                         </Card>
                     </Modal>
@@ -135,7 +135,7 @@ const AccountPage = () => {
                             />                            
                             </Card.Content>
                             <Card.Actions>
-                                <Button onPress={() => setProjectVisible(false)}>Done</Button>
+                                <Button color="#284e57" onPress={() => setProjectVisible(false)}>Done</Button>
                             </Card.Actions>
                         </Card>
                     </Modal>
@@ -145,14 +145,15 @@ const AccountPage = () => {
             <View style={{ flex: 1, justifyContent: 'flex-end'}}>
 
             <View style={{ flexDirection: 'row', marginTop:10 }}>
-                <Button labelStyle={{color:"white"}} color="#51b1a8" mode="contained" compact={true} style={{flex:1}} onPress={() => setInterestVisible(true)}>
+                <Button color="#284e57" compact={true} style={{flex:1}} onPress={() => setInterestVisible(true)}>
                     Add Interest
                 </Button>
-                <Button labelStyle={{color:"white"}} color="#51b1a8" mode="contained" compact={true} style={{flex:1}} onPress={()=> setProjectVisible(true)}>
+                <Button color="#284e57" compact={true} style={{flex:1}} onPress={()=> setProjectVisible(true)}>
                     Add Project
                 </Button>
             </View>
                 <Button
+                color="#284e57"
                 mode="contained" 
                 onPress={()=> {
                     updateUser({

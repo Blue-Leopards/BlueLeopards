@@ -1,17 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { View, FlatList, ScrollView } from 'react-native';
-import { TextInput, Button, Title, Chip, Text, Subheading } from 'react-native-paper';
+import React, { useState } from 'react';
+import { View, FlatList } from 'react-native';
+import { TextInput, Button, Title, Text } from 'react-native-paper';
 import { Card, Paragraph, IconButton } from 'react-native-paper';
 import { useAuth } from "../providers/AuthProvider";
 import { Modal, Portal, Provider } from 'react-native-paper';
 
-const buttonStyle = {
-  padding: 0, margin: 0
-};
-const buttonTextStyle = {
-    fontSize:10,
-    padding: 0, margin: 0
-};
 
 const AddProjectPage = () => {
     const { user, profiles, interests, createProject } = useAuth();
@@ -140,13 +133,14 @@ const AddProjectPage = () => {
                       flex: 1,
                       justifyContent: 'flex-end',
                 }}>
-                <Button labelStyle={{ color: "white" }} color="#51b1a8" mode="contained" compact={true} onPress={() => setInterestVisible(true)}>
+                <Button color="#284e57"  compact={true} onPress={() => setInterestVisible(true)}>
                     Add Interests
                 </Button>
-                <Button style={{marginTop:10}} labelStyle={{ color: "white" }} color="#51b1a8" mode="contained" compact={true} onPress={() => setProfileVisible(true)}>
+                <Button color="#284e57" compact={true} onPress={() => setProfileVisible(true)}>
                     Add Contributors
                 </Button>
                 <Button
+                    color="#284e57" 
                     mode="contained" 
                     onPress={() => {createProject({ name, homePage, picture, description}, selectedProfiles, selectedInterests)}}
                     style={{marginTop:10}}>
