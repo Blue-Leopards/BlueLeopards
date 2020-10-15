@@ -9,12 +9,13 @@ const SettingsPage = () => {
     const navigation = useNavigation();
 
     return (
-            <View style={{ flex: 6
+            <View style={{ flex: 6,
             }}>
-                <View style={{padding:30}}>
-                <Button style={{marginBottom: 5}} mode="contained" onPress={() => navigation.navigate("Account")}>Manage Account</Button>
-                <Button style={{marginBottom: 5}} mode="contained" onPress={() => navigation.navigate("AddProject")}>Create Project</Button>
-                <Logout/>
+                <View style={{padding:30, height:'75%', justifyContent:'center'}}>
+                    <Button style={{marginBottom: 5}} mode="contained" onPress={() => navigation.navigate("Account")}>Manage Account</Button>
+                    <Button style={{marginBottom: 5}} mode="contained" onPress={() => navigation.navigate("Filter")}>Search</Button>
+                    <Button style={{marginBottom: 5}} mode="contained" onPress={() => navigation.navigate("AddProject")}>Create Project</Button>
+                    <Logout/>
                 </View>
                 <View style={{
                       flex: 1,
