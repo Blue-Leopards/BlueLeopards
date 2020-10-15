@@ -39,7 +39,7 @@ const ProfilesPage = () => {
 const Profile = (props) => {
     const { _id, firstName, lastName, bio, picture, title } = props.data;
     const initials = firstName[0] + lastName[0];
-    const LeftContent = props => <Avatar.Text size={50} label={initials} />
+    const LeftContent = props => <Avatar.Text style={{backgroundColor:'#284e57'}} size={50} label={initials} />
     const fullName = firstName + " " + lastName;
 
     const interests = getInterests(_id);
@@ -72,7 +72,7 @@ const Profile = (props) => {
                         listKey={`interests:${_id}`}
                         data={interests}
                         renderItem={({ item, index }) => 
-                            <Chip key={item.id} style={{ borderColor:'black', backgroundColor: '#51b1a8' }}>
+                            <Chip key={item.id} style={{ backgroundColor: '#8bb9b9' }}>
                                 <Text style={{ color: 'white', fontWeight: 'bold' }}>{item.name}</Text>
                             </Chip>} />
                 </Card.Content>
