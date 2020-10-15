@@ -1,38 +1,56 @@
-import React from 'react';
-import {
-    View,
-  } from 'react-native';
-import {
-    TextInput, 
-    Button,
-    Title
-} from 'react-native-paper';
-
-const MyInput = (props) => {
-    const [text, setText] = React.useState('');
-
-    return (
-        <TextInput
-            label={props.category}
-            value={text}
-            onChangeText={text => setText(text)}
-        />
-    );
-};
+import React, { useEffect, useState } from 'react';
+import { View, Alert } from 'react-native';
+import { TextInput, Button, Title } from 'react-native-paper';
+import { useAuth } from "../providers/AuthProvider";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginPage = () => {
-    
+    const navigation = useNavigation();
+    const { user, signIn } = useAuth();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        // If there is a user logged in, go to the Profiles page.
+        if (user != null) {
+            navigation.navigate("Profiles");
+        }
+    }, [user]);
+
+    // The onPressSignIn method calls AuthProvider.signIn with the
+    // email/password in state.
+    const onPressSignIn = async () => {
+        console.log("Pressed sign in");
+        try {
+            await signIn(email, password);
+        } catch (error) {
+            Alert.alert(`Failed to sign in: ${error.message}`);
+        }
+    };
+
     return (
         <View style={{padding:40}}>
-            <Title>Log In</Title>
-            <MyInput category="Email"/>
-            <MyInput category="Password"/>
+            <Title>Blue Leopards</Title>
+            <TextInput
+            label="Email"
+            value={email}
+            onChangeText={setEmail}
+            />
+            <TextInput
+            label="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            />
             <Button
                 mode="contained" 
-                onPress={()=>console.log("Pressed Login Button!")}
+                onPress={onPressSignIn}
                 style={{marginTop:10}}>
-                Go
+                Log In
             </Button>
+
+            <Button onPress={() => navigation.navigate("SignUp")}>sign up</Button>
         </View>
     );
 }

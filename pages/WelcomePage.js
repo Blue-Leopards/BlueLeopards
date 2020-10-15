@@ -37,8 +37,8 @@ export function WelcomeView({ navigation }) {
   };
 
   return (
-    <View>
-      <Text>Signup or Signin, pussy:</Text>
+    <View style={{padding:40}}>
+    <Text>Signup or Signin, pussy:</Text>
       <View style={{ padding: 5 }}>
         <TextInput
           onChangeText={setEmail}
