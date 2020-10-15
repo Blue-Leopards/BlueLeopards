@@ -1,18 +1,12 @@
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import React from 'react';
-import { View, Text } from 'react-native';
-
-import { Button } from 'react-native-paper';
-
+import { View } from 'react-native';
 import { AuthProvider } from "./providers/AuthProvider";
 
 
-// Import Views
-import HomePage from './pages/HomePage';
-//import WelcomePage from './pages/WelcomePage';
+// Import Pages
 import ProfilesPage from './pages/ProfilesPage';
 import ProjectsPage from './pages/ProjectsPage';
 import InterestsPage from './pages/InterestsPage';
@@ -30,16 +24,6 @@ const App = () => {
   return (
     <AuthProvider>
       <NavigationContainer>
-          {/* <HomePage/> */}
-          {/* <ProfilesPage/> */}
-          {/* <ProjectsPage/> */}
-          {/* <InterestsPage /> */}
-          {/* <NavigationBar/> */}
-          {/* <SignUpPage/> */}
-          {/* <LoginPage/> */}
-          {/* <AccountPage/> */}
-          {/* <AddProjectPage/> */}
-          {/* <FilterPage/> */}
         <View style={{flex:1, backgroundColor: "#eae9ef"}}>
         {/* <Stack.Navigator headerMode="none" screenOptions={{ animationEnabled: false }}> */}
         <Stack.Navigator screenOptions={{ animationEnabled: false }}>
@@ -89,6 +73,5 @@ const App = () => {
     </AuthProvider>
   );
 };
-
 
 export default App;

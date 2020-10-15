@@ -57,43 +57,5 @@ const styles = {
   buttonLabelStyle: {
   }
 };
-/* 
 
-/*
-    <View style={{
-      height: 75,
-      backgroundColor: 'lightgrey',
-      flexDirection: 'row',
-      borderWidth:1
-    }}>
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        <Button mode="contained" icon="account-group"  onPress={() => navigation.navigate('Profiles')}></Button>
-      </View>
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        <Button icon="file-account" onPress={() => navigation.navigate('Projects')}></Button>
-      </View>
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        <Button icon="lightbulb-on" onPress={() => navigation.navigate('Interests')}></Button>
-      </View>
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        <Button icon="cog-outline" onPress={() => navigation.navigate('Settings')}></Button>
-      </View>
-    </View>
-*/
 export default NavigationBar;
