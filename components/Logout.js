@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Button, Alert } from "react-native";
+import {  Alert } from "react-native";
+import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../providers/AuthProvider";
 
@@ -9,7 +10,8 @@ export function Logout() {
 
   return (
     <Button
-      title="Log Out"
+      mode="contained"
+      color="#69604d"
       onPress={() => {
         Alert.alert("Log Out", null, [
           {
@@ -23,6 +25,6 @@ export function Logout() {
           { text: "Cancel", style: "cancel" },
         ]);
       }}
-    />
+    >Log Out</Button>
   );
 }
