@@ -1,17 +1,10 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import { Text, 
-    Avatar, 
-    Card, 
-    Paragraph,
-    Divider, 
-    Subheading, 
-    Chip, 
-    Button } from 'react-native-paper';
+import { Text, Avatar, Card, Paragraph, Divider, Subheading, Chip, Caption } from 'react-native-paper';
 import { useAuth } from "../providers/AuthProvider";
 import NavigationBar from "../pages/NavigationBar";
 
-const ProjectsPage = ({ navigation }) => {
+const ProjectsPage = () => {
     const { projects } = useAuth();
 
     return (
@@ -54,17 +47,17 @@ const Project = (props) => {
             <View>
                 <Card.Content style={{ flex: 1 }}>
                     <FlatList
-                        style={{ flexDirection: 'row' }}
+                        style={{ flexDirection: 'row-reverse', flexWrap: 'wrap', alignContent: 'center', }}
                         listKey={`interests:${_id}`}
                         data={interests}
-                        renderItem={({ item, index }) => <Chip key={item.id} style={{ marginRight: 10, backgroundColor: '#51b1a8' }}><Text style={{ color: 'white' }}>{item.name}</Text></Chip>} />
+                        renderItem={({ item, index }) => <Chip key={item.id} style={{ backgroundColor: '#51b1a8' }}><Text style={{ color: 'white' }}>{item.name}</Text></Chip>} />
                 </Card.Content>
                 <Card.Content style={{ flex: 1 }}>
                     <Subheading>Contributors</Subheading>
                     <FlatList
                         listKey={`contributors:${_id}`}
                         data={profiles}
-                        renderItem={({ item, index }) => <Paragraph key={item.id}>{item.name}</Paragraph>} />
+                        renderItem={({ item, index }) => <Caption style={{borderWidth:0, marginLeft:10, fontSize:15}} key={item.id}>- {item.name}</Caption>} />
                 </Card.Content>
             </View>
             <Divider style={{ marginTop: 10 }} />
@@ -119,76 +112,5 @@ const getProfileData = (profileId) => {
     }
     return { name, id: `${profile[0]._id}`};
 };
-
-const Nav = ({ navigation}) =>
-    <View style={{
-        height: 75,
-        backgroundColor: 'lightgrey',
-        flexDirection: 'row'
-    }}>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Profiles')}>Profiles</Button>
-        </View>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Projects')}>Projects</Button>
-        </View>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Interests')}>Interests</Button>
-        </View>
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <Button onPress={() => navigation.navigate('Settings')}>Settings</Button>
-        </View>
-    </View>;
-
-const DATA = [
-    {
-        id:'10',
-        pictureURL: '../public/images/default_project.png',
-        name: 'Open Power Quality',
-        description: 'Open source hardware and software for distributed power quality data collection, analysis, and visualization.',
-        interests: ['Software Engineering', 'Renewable Energy'],
-        contributors: ['Philip Johnson', 'Anthony Christe', 'Serge Negrashov']
-    },
-    {
-        id:'20',
-        pictureURL: '../public/images/default_project.png',
-        name: 'RadGrad',
-        description: 'Growing awesome computer scientists, one graduate at a time.',
-        interests: ['Educational Technology'],
-        contributors: ['Philip Johnson', 'Carleton Moore']
-    },
-    {
-        id:'30',
-        pictureURL: '../public/images/default_project.png',
-        name: 'WRENCH',
-        description: 'WRENCH is an open-source library for developing simulators for large-scale scientific computation.',
-        interests: ['Distributed computing'],
-        contributors: ['Henri Casanova']
-    },
-    {
-        id:'40',
-        pictureURL: '../public/images/default_project.png',
-        name: 'Cyber Canoe',
-        description: 'Software for Unity projects involving stereoscopic resolution driven by 9 PCs with a GeForce 980 graphics card.',
-        interests: ['Unity', 'Visualization'],
-        contributors: ['Jason Leigh']
-    },
-];
 
 export default ProjectsPage;
