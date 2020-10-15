@@ -62,7 +62,7 @@ const Profile = (props) => {
                             style={{ flexDirection: 'column', flexWrap: 'wrap', padding: 0}}
                             listKey={`projects:${_id}`}
                             data={projects}
-                            renderItem={({ item, index }) => <Caption style={{borderWidth:0, marginLeft:10, fontSize:15}} key={item.id}>- {item.name}</Caption>} />
+                            renderItem={({ item }) => <Caption style={{borderWidth:0, marginLeft:10, fontSize:15}} key={item.id}>- {item.name}</Caption>} />
                         </Card.Content>
                     : null
                 }
@@ -71,7 +71,7 @@ const Profile = (props) => {
                         style={{ flexDirection: 'row-reverse', flexWrap: 'wrap', alignContent: 'center', }}
                         listKey={`interests:${_id}`}
                         data={interests}
-                        renderItem={({ item, index }) => 
+                        renderItem={({ item }) => 
                             <Chip key={item.id} style={{ backgroundColor: '#8bb9b9' }}>
                                 <Text style={{ color: 'white', fontWeight: 'bold' }}>{item.name}</Text>
                             </Chip>} />

@@ -65,6 +65,7 @@ const App = () => {
             <Stack.Screen
               name="Filter"
               component={FilterPage}
+              options={{ title: "" }}
               />
             <Stack.Screen
               name="Settings"

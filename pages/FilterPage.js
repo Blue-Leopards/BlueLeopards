@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { TextInput, Button, Title, Searchbar, Card, Subheading, Paragraph, Divider, Avatar, Chip, Text } from 'react-native-paper';
+import { TextInput, Button, Title, Searchbar, Card, Subheading, Paragraph, Divider, Avatar, Chip, Text, Caption } from 'react-native-paper';
 import { useAuth } from "../providers/AuthProvider";
 
 const FilterPage = () => {
@@ -83,7 +83,7 @@ const FilterPage = () => {
 const Profile = (props) => {
     const { _id, firstName, lastName, bio, picture, title } = props.data;
     const initials = firstName[0] + lastName[0];
-    const LeftContent = props => <Avatar.Text size={50} label={initials} />
+    const LeftContent = props => <Avatar.Text style={{backgroundColor:'#284e57'}} size={50} label={initials} />
     const fullName = firstName + " " + lastName;
 
     const interests = getInterests(_id);
@@ -98,10 +98,13 @@ const Profile = (props) => {
             <View>
                 <Card.Content style={{ flex: 1 }}>
                     <FlatList
-                        style={{ flexDirection: 'row' }}
+                        style={{ flexDirection: 'row-reverse', flexWrap: 'wrap', alignContent: 'center', }}
                         listKey={`interests:${_id}`}
                         data={interests}
-                        renderItem={({ item, index }) => <Chip key={item.id} style={{ marginRight: 10, backgroundColor: '#51b1a8' }}><Text style={{ color: 'white' }}>{item.name}</Text></Chip>} />
+                        renderItem={({ item, index }) => 
+                            <Chip key={item.id} style={{ marginRight: 10, backgroundColor: '#8bb9b9' }}>
+                                <Text style={{ color: 'white' }}>{item.name}</Text>
+                            </Chip>} />
                 </Card.Content>
                 {
                     projects.length > 0
@@ -111,7 +114,7 @@ const Profile = (props) => {
                         <FlatList
                             listKey={`projects:${_id}`}
                             data={projects}
-                            renderItem={({ item, index }) => <Paragraph key={item.id}>{item.name}</Paragraph>} />
+                            renderItem={({ item }) => <Caption style={{borderWidth:0, marginLeft:10, fontSize:15}} key={item.id}>- {item.name}</Caption>} />
                         </Card.Content>
                     : null
                 }
